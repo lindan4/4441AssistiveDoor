@@ -10,4 +10,4 @@ if __name__ == "__main__":
     if successData==True:
         t.trainingMechanism()
     else:
-        print("you fucked up")
+        print("Something went wrong, try again")

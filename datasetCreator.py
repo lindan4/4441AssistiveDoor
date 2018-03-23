@@ -2,16 +2,22 @@ from Tkinter import *
 import cv2
 import time
 import numpy as np
-
+import os.path
 
 root = Tk()
 
 def destroyAll():
     root.destroy()
-    
+
+path="sRF.txt"
+
+
 faceDetect=cv2.CascadeClassifier('haarcascade_frontalface_default.xml');
 
 def creationMechanism():
+        f=0
+        g=0
+        h=0
         #GUI
         root.title("Information required")
         root.geometry("450x150+500+400") #Works for the Surface Screen
@@ -33,19 +39,32 @@ def creationMechanism():
         #id=raw_input('Please enter your name: ')
 
         #Frontal face capture
-        
+        serialID=0
         if len(name.get()) == 0:
             print("Cant leave name field empty")
             return False
         else:
             cam=cv2.VideoCapture(1);
+
+            if os.path.isfile(path):
+                print("File exists")
+                g=open(path,"r")
+                serialID=int(g.read())
+                serialID=serialID+1
+                g.close()
+            else:
+                print("File does not exist. Create one fam")
+                f=open(path,"w+")
+                serialID=serialID+1
+                f.close();
+                
             while(True):
                 ret,img=cam.read();
                 gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY);
                 faces=faceDetect.detectMultiScale(gray,1.3,5);
                 for(x,y,w,h) in faces:
                     sampleNum=sampleNum+1;
-                    cv2.imwrite("facesDataTest/"+str(name.get())+ "." +str(sampleNum)+ ".jpg", gray[y:y+h, x:x+w])
+                    cv2.imwrite("facesDataTest/"+str(name.get())+"."+ str(serialID)+"." +str(sampleNum)+ ".jpg", gray[y:y+h, x:x+w])
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
                     cv2.waitKey(100);
                 cv2.imshow("face",img);
@@ -55,4 +74,7 @@ def creationMechanism():
                 
             cam.release()
             cv2.destroyAllWindows()
+            h=open(path,"w")
+            h.write(str(serialID))
+            h.close()
             return True
