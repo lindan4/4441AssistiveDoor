@@ -15,7 +15,7 @@ while(True):
     for(x,y,w,h) in faces:
         cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
         Id,conf=rec.predict(gray[y:y+h,x:x+w])
-        if(conf<57):
+        if(conf<55):    # Play around with these values because camera is shitty
             if(Id==1):
                 Id="Lindan"
 #            elif(Id==2):

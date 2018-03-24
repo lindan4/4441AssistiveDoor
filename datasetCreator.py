@@ -1,4 +1,5 @@
 from Tkinter import *
+import sqlite3
 import cv2
 import time
 import numpy as np
@@ -18,6 +19,7 @@ def creationMechanism():
         f=0
         g=0
         h=0
+        
         #GUI
         root.title("Information required")
         root.geometry("450x150+500+400") #Works for the Surface Screen
@@ -27,8 +29,6 @@ def creationMechanism():
 
         name=StringVar() #user name stored here
         entry_box = Entry(root, textvariable=name, width=35).place(x=220,y=33)
-
-
 
         okButton= Button(root, text="Ok", width=25, height=2,
                          command=destroyAll).place(x=140,y=100)
@@ -77,4 +77,13 @@ def creationMechanism():
             h=open(path,"w")
             h.write(str(serialID))
             h.close()
+            tableInsert(serialID, str(name.get()))
             return True
+
+def tableInsert(serialID, name):
+        conn=sqlite3.connect('FaceBase.db')
+        print "connected successfully"
+        conn.execute("insert into People (SerialNumber, Name) values (?, ?)",
+                     (serialID,name))
+        conn.commit()
+        conn.close()
