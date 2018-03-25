@@ -25,6 +25,8 @@ public class Main {
 	final File TestRoot = new File("Tests\\");
 
 	final float sampleRate = 16000.0f;
+	
+	
 
 	private long recordingTime;
 	public long getRecordingTime() {
@@ -129,7 +131,7 @@ public class Main {
 
 		int high = getConfidence(getCurrentTestCaseFile(), name);
 
-		if (high > 50 ) {
+		if (high < threshhold ) {
 			return true;
 		}
 		return false;
@@ -141,17 +143,30 @@ public class Main {
 			throws UnsupportedAudioFileException, IOException {
 		Recognito recognito = inprintModel(name);
 		int high = 0;
+		
+		int avg = 0;
+		int avgCount = 0;
 
 		List<MatchResult<String>> matches = recognito.identify(new File(getCurrentTestCaseFile()));
 
 		for (MatchResult<String> match : matches) {
 			System.out.println("File : " + match.getKey() + " .... Confidence %: " + match.getLikelihoodRatio());
-
+			
+			avg = avg + match.getLikelihoodRatio();
+			avgCount++;
+			
+			/*
 			if (high < match.getLikelihoodRatio()) {
 				high = match.getLikelihoodRatio();
 			}
+			*/
 
 		}
+		
+		high = avg / avgCount;
+		
+		System.out.println("Confidence average is: " + high);
+		
 		return high;
 
 	}
@@ -160,6 +175,9 @@ public class Main {
 	public int getHighestConfidenceAll(String currentTestCasePath) throws UnsupportedAudioFileException, IOException {
 		Recognito recognito;
 		int high = 0;
+		
+		int confidenceAvg = 0;
+		int confidenceAvgCounter = 0;
 
 		for (String user : getRegisteredUsers()) {
 			recognito = inprintModel(user);
@@ -169,14 +187,25 @@ public class Main {
 			for (MatchResult<String> match : matches) {
 				System.out.println("File : " + match.getKey() + " .... Confidence %: " + match.getLikelihoodRatio());
 
+				//confidenceAvg = confidenceAvg + match.getLikelihoodRatio();
+				//confidenceAvgCounter++;
+				
+				
 				if (high < match.getLikelihoodRatio()) {
 					high = match.getLikelihoodRatio();
 				}
+				
 
 			}
+			
+			
 
 		}
 
+		high = confidenceAvg / confidenceAvgCounter;
+		
+		
+		
 		return high;
 	}
 

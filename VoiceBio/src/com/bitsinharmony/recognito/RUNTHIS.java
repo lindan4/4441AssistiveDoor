@@ -102,7 +102,7 @@ public class RUNTHIS {
 				}
 
 				// 50% is a good value you can set to some other value
-				int threshhold = 50;
+				int threshhold = 45;
 
 				try {
 					// uses latest test case

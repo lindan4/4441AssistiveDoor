@@ -1,0 +1,17 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.voicerecog.maven</groupId>
+  <artifactId>voicerecognition</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Archetype - voicerecognition</name>
+  <url>http://maven.apache.org</url>
+  
+  <dependency>
+   <groupId>com.google.cloud</groupId>
+   <artifactId>google-cloud-storage</artifactId>
+   <version>1.14.0</version>
+  </dependency>
+  
+  
+</project>

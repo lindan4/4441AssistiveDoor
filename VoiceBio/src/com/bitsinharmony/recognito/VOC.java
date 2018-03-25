@@ -146,16 +146,25 @@ public class VOC {
 
 						int average = 0;
 						int high = 0;
+						int avgCount = 0;
 
 						for (MatchResult<String> match : matches) {
 							System.out.println(
 									"File : " + match.getKey() + " .... Confidence %: " + match.getLikelihoodRatio());
 							average += match.getLikelihoodRatio();
-							if (high < match.getLikelihoodRatio()) {
+							avgCount++;
+							
+							/* if (high < match.getLikelihoodRatio()) {
 								high = match.getLikelihoodRatio();
 							}
+							*/
 
 						}
+						
+						//average = average / avgCount;
+						
+						//System.out.println("Confidence average is: " + average);
+						
 						boolean result = testmessage.equals(message.trim());
 						System.out.println(">>>>>>>> PhaseMatch = '" + result + "' with " + datafolder.getName());
 
