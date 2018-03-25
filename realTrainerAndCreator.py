@@ -3,8 +3,7 @@ import trainer as t
 import time
 from threading import Thread
 
-if __name__ == "__main__":
-    
+def creatorAndTrainer():
     successData=d.creationMechanism();
 
     if successData==True:

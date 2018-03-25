@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 import sqlite3
-
+import time
+import fileDeleteMechanism as t
 
 def tableInsert(Id):
         name=22
@@ -16,20 +17,21 @@ def tableInsert(Id):
 
         for r in row:
             name=r
-            
+
         print(str(name))
         conn.close()
         return name
 
-
-def faceDetector():
+def deleteTrace():
         faceDetect=cv2.CascadeClassifier('haarcascade_frontalface_default.xml');
         cam=cv2.VideoCapture(1);
         rec=cv2.face.LBPHFaceRecognizer_create();
         rec.read("recognizer\\traningData.yml")
+        i=0
+        switch=False
+        Id=0
         font = cv2.FONT_HERSHEY_COMPLEX_SMALL
-        
-        while(True):
+        while(i<90):
             ret,img=cam.read();
             gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY);
             faces=faceDetect.detectMultiScale(gray,1.3,5);
@@ -37,16 +39,30 @@ def faceDetector():
                 cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
                 Id,conf=rec.predict(gray[y:y+h,x:x+w])
                 print(conf);
-                if(conf<45):    # Play around with these values because camera is shitty
-                   print("confidence below 42")
+                if(conf<41):    # Play around with these values because camera is shitty
+                  # print("confidence below 42")
                    name=tableInsert(Id)
+                   switch=True
                 else:
                     name="Unknown"
+                    switch=False
                 cv2.putText(img,str(name),(x,y+h),font,3.0,(0,255,0));
                 
             cv2.imshow("face",img);
-            if(cv2.waitKey(1)==ord('q')):
-                break;
+            cv2.waitKey(10)
+            time.sleep(0.15)
+            i=i+1
         cam.release()
         cv2.destroyAllWindows()
 
+        if switch==True:
+            print("Person Identified as: " + name + " ID: "+str(Id))
+            #print()
+            inputAns=raw_input("Are you sure that you want to delete everything?\nDoing so"
+                  "will deauthorize you from the system.\nEnter Y for yes, N for No: ")
+            if inputAns=='y' or inputAns=='Y':
+                t.DeleteImformation(name,Id)
+            else:
+                print("Bailing out")
+        else:
+            print("You are unauthorized to make these changes")
