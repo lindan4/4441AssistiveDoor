@@ -5,7 +5,7 @@ import trainer as t
 
 def DeleteImformation(names,Id):
     for name in glob.glob('facesData/'+names+'.'+str(Id)+'.*.jpg'):
-        print name
+#        print name
         os.remove(name)
     print("files have been deleted");
     

@@ -58,7 +58,10 @@ def creationMechanism():
                 serialID=serialID+1
                 f.close();
                 
+            print "Taking a picture for training purposes"
+
             while(True):
+                
                 ret,img=cam.read();
                 gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY);
                 faces=faceDetect.detectMultiScale(gray,1.3,5);

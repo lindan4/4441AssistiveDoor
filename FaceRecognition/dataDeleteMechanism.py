@@ -30,8 +30,10 @@ def deleteTrace():
         i=0
         switch=False
         Id=0
+        t_end=time.time()+5
+        
         font = cv2.FONT_HERSHEY_COMPLEX_SMALL
-        while(i<90):
+        while(time.time()<=t_end):
             ret,img=cam.read();
             gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY);
             faces=faceDetect.detectMultiScale(gray,1.3,5);
@@ -50,8 +52,6 @@ def deleteTrace():
                 
             cv2.imshow("face",img);
             cv2.waitKey(10)
-            time.sleep(0.15)
-            i=i+1
         cam.release()
         cv2.destroyAllWindows()
 
@@ -59,7 +59,7 @@ def deleteTrace():
             print("Person Identified as: " + name + " ID: "+str(Id))
             #print()
             inputAns=raw_input("Are you sure that you want to delete everything?\nDoing so"
-                  "will deauthorize you from the system.\nEnter Y for yes, N for No: ")
+                  " will deauthorize you from the system.\nEnter Y for yes, N for No: ")
             if inputAns=='y' or inputAns=='Y':
                 t.DeleteImformation(name,Id)
             else:

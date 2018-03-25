@@ -5,9 +5,9 @@ import sqlite3
 
 
 def tableInsert(Id):
-        name=22
+        name=0
         conn=sqlite3.connect('FaceBase.db')
-        print "connected successfully"
+        #print "connected successfully"
         cur=conn.execute("Select Name from People where SerialNumber = ?", [int(Id)])
         conn.commit()
 
@@ -41,16 +41,16 @@ def faceDetector():
                 cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
                 Id,conf=rec.predict(gray[y:y+h,x:x+w])
                 print(conf);
-                if(conf<45):    # Play around with these values because camera is shitty
-                   print("confidence below 42")
+                if(conf<42):    # Play around with these values because camera is shitty
+                   #print("confidence below 42")
                    name=tableInsert(Id)
                 else:
                     name="Unknown"
                 cv2.putText(img,str(name),(x,y+h),font,3.0,(0,255,0));
                 
             cv2.imshow("face",img);
-            if(cv2.waitKey(1)==ord('q')):
-                break;
+            cv2.waitKey(1)
+             #   break;
         cam.release()
         cv2.destroyAllWindows()
 
