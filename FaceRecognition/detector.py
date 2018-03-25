@@ -1,4 +1,5 @@
 import cv2
+import time 
 import numpy as np
 import sqlite3
 
@@ -21,15 +22,18 @@ def tableInsert(Id):
         conn.close()
         return name
 
-
 def faceDetector():
         faceDetect=cv2.CascadeClassifier('haarcascade_frontalface_default.xml');
         cam=cv2.VideoCapture(1);
         rec=cv2.face.LBPHFaceRecognizer_create();
         rec.read("recognizer\\traningData.yml")
         font = cv2.FONT_HERSHEY_COMPLEX_SMALL
+        t_end=time.time()+5
+        name="Unknown"
+
+        sentinel=False
         
-        while(True):
+        while time.time()<=t_end:
             ret,img=cam.read();
             gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY);
             faces=faceDetect.detectMultiScale(gray,1.3,5);
@@ -50,3 +54,9 @@ def faceDetector():
         cam.release()
         cv2.destroyAllWindows()
 
+        if name=="Unknown":
+                print "You are unauthorized to enter!"
+        else:
+                print "We found a match as " +name+". You may proceed to the next phase"
+                sentinel=True
+        return sentinel
