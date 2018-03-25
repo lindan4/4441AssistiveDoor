@@ -208,8 +208,97 @@ public class DoorMain {
 		Prompts.setText("Please position your face \nin front of the camera.");
 		
 		
+		Timer tThree = new Timer(5000, new ActionListener()
+		{
+			  @Override
+			  public void actionPerformed(ActionEvent arg0) 
+			  {
+			    fourthState();
+			  }
+			}	  
+		);
+		tThree.start();
+	}
+	
+	private void fourthState()
+	{
+		/*
+		 * Three cases:
+		 * 
+		 * 1. Correct face: move on to state 5
+		 * 2. Wrong face: invalid, please try again
+		 * 3. System error: output prompt stating error, reset device, try again.
+		 */
+		
+		faceRecogButton.setIcon(new ImageIcon("images/HappyActive.png"));
+		Prompts.setText("Correct. Turning on microphone now.");
+		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
+		
+		Timer tFour = new Timer(5000, new ActionListener()
+		{
+			  @Override
+			  public void actionPerformed(ActionEvent arg0) 
+			  {
+			    fifthState();
+			  }
+			}	  
+		);
+		tFour.start();
+		
+	}
+	
+	private void fifthState()
+	{
+		/*
+		 * Three cases:
+		 * 
+		 * 1. Correct phrase and voice: move on to state 5
+		 * 2. Wrong phrase and voide: invalid, please try again
+		 * 3. System error: output prompt stating error, reset device, try again.
+		 */
 		
 		
+		voiceRecogButton.setIcon(new ImageIcon("images/SpeechDots.png"));
+		Prompts.setText("Please say pass phrase now.");
+		
+		Timer tSix = new Timer(5000, new ActionListener()
+		{
+			  @Override
+			  public void actionPerformed(ActionEvent arg0) 
+			  {
+			    sixthState();
+			  }
+			}	  
+		);
+		tSix.start();
+		
+		
+	}
+	
+	private void sixthState()
+	{
+		voiceRecogButton.setIcon(new ImageIcon("images/SpeechActive.png"));
+		progressBarButton.setIcon(new ImageIcon("images/ThreeFourth.png"));
+		Prompts.setText("Correct. Door is now unlocking.");
+		
+		Timer tSeven = new Timer(5000, new ActionListener()
+		{
+			  @Override
+			  public void actionPerformed(ActionEvent arg0) 
+			  {
+			    seventhState();
+			  }
+			}	  
+		);
+		tSeven.start();
+		
+	}
+	
+	private void seventhState()
+	{
+		doorLockButton.setIcon(new ImageIcon("images/Unlock.png"));
+		progressBarButton.setIcon(new ImageIcon("images/FullBar.png"));
+		Prompts.setText("Come on in!");
 		
 	}
 	
