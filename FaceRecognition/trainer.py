@@ -17,12 +17,13 @@ def getImagesWithID(path):
             cv2.waitKey(10)
         return np.array(IDs),faces
 
-def trainingMechanism():
-    recognizer=cv2.face.LBPHFaceRecognizer_create();
-    path='facesData'
 
-    Ids,faces=getImagesWithID(path)
-    recognizer.train(faces,Ids)
-    recognizer.save('recognizer/traningData.yml')
-    cv2.destroyAllWindows()
-    print("Done training")
+recognizer=cv2.face.LBPHFaceRecognizer_create();
+path='facesData'
+
+def trainingMechanism():
+        Ids,faces=getImagesWithID(path)
+        recognizer.train(faces,Ids)
+        recognizer.save('recognizer/traningData.yml')
+        cv2.destroyAllWindows()
+        #print("Done training")
