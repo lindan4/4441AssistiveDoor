@@ -18,7 +18,7 @@ def tableInsert(Id):
         for r in row:
             name=r
             
-        print(str(name))
+        #print(str(name))
         conn.close()
         return name
 
@@ -40,7 +40,7 @@ def faceDetector():
             for(x,y,w,h) in faces:
                 cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
                 Id,conf=rec.predict(gray[y:y+h,x:x+w])
-                print(conf);
+                #print(conf);
                 if(conf<42):    # Play around with these values because camera is shitty
                    #print("confidence below 42")
                    name=tableInsert(Id)
@@ -59,4 +59,4 @@ def faceDetector():
         else:
                 print "We found a match as " +name+". You may proceed to the next phase"
                 sentinel=True
-        return sentinel
+        return sentinel, name

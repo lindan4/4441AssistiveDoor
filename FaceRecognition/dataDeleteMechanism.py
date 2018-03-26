@@ -18,7 +18,7 @@ def tableInsert(Id):
         for r in row:
             name=r
 
-        print(str(name))
+        #print(str(name))
         conn.close()
         return name
 
@@ -40,6 +40,7 @@ def deleteTrace():
             for(x,y,w,h) in faces:
                 cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
                 Id,conf=rec.predict(gray[y:y+h,x:x+w])
+                #
                 print(conf);
                 if(conf<41):    # Play around with these values because camera is shitty
                   # print("confidence below 42")
@@ -66,3 +67,4 @@ def deleteTrace():
                 print("Bailing out")
         else:
             print("You are unauthorized to make these changes")
+        return switch
