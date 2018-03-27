@@ -94,5 +94,42 @@ public final class LinkerMethods {
 		} //Need to install python in the directory of the program
 		return retVal;
 	}
-	 
+	
+	/**
+	 * Allows the person to delete their own information from the whole system
+	 * @return -1 if the person doesn't exist in the system, 1 if the delete was successful
+	 * 0 if the authorized user decides not to delete their information, and -2 if an exceotion is thrown.
+	 */
+	public static int callDataDelete(){
+		int i;
+		try {
+			Process p =Runtime.getRuntime().exec("C:\\\\Python27\\\\python.exe dataDeleteMechanism.py"); //Need to install python in the directory of the program
+			//Input stream from the executable
+			InputStream is = p.getInputStream();
+			
+			//Read the input stream
+			//int i=0;
+			StringBuffer sb = new StringBuffer();
+			while((i=is.read())!=-1) {
+				sb.append((char)i);
+			}
+			
+			//System.out.println(sb.toString());
+			
+			Scanner scan= new Scanner(sb.toString());
+			//scan.nextLine();
+			String oneLine =scan.nextLine();
+			i= Integer.parseInt(oneLine);
+			//System.out.println(oneLine);
+			
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			i=-12;
+		}
+		return i;
+	}
+	
 }

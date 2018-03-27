@@ -15,5 +15,7 @@ public class PythonLinker {
 		//boolean test = LinkerMethods.callDataSetGeneration();
 		//System.out.println(test);
 		
+		int i=LinkerMethods.callDataDelete();
+		System.out.println(i);
 	}
 }
