@@ -60,7 +60,7 @@ while(time.time()<=t_end):
                 Id,conf=rec.predict(gray[y:y+h,x:x+w])
                 #
                 #print(conf);
-                if(conf<41):    # Play around with these values because camera is shitty
+                if(conf<48):    # Play around with these values because camera is shitty
                   # print("confidence below 42")
                    name=tableInsert(Id)
                    switch=True

@@ -41,7 +41,7 @@ while time.time()<=t_end:
                 cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
                 Id,conf=rec.predict(gray[y:y+h,x:x+w])
                 #print(conf);
-                if(conf<42):    # Play around with these values because camera is shitty
+                if(conf<48):    # Play around with these values because camera is shitty
                 #print("confidence below 42")
                         name=tableInsert(Id)
                 else:
