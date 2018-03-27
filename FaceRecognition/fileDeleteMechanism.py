@@ -14,7 +14,7 @@ def DeleteImformation(names,Id):
                  ,(Id,names))
     
     conn.commit()
-    print("Deleted all traces of informartion");
+    #print("Deleted all traces of informartion");
     t.trainingMechanism()
 
 

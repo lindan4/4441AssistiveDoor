@@ -1,8 +1,12 @@
+from Tkinter import *
 import cv2
 import numpy as np
 import sqlite3
 import time
 import fileDeleteMechanism as t
+
+name=0
+Id=0
 
 def tableInsert(Id):
         name=22
@@ -23,15 +27,29 @@ def tableInsert(Id):
         return name
 
 
+def okButton():
+        print "-1"
+        root.destroy()
+
+def noButton():
+        print "0"
+        root.destroy()
+
+def yesButton():
+        t.DeleteImformation(name,Id)
+        root.destroy()
+        print "1"
+        
+
 faceDetect=cv2.CascadeClassifier('haarcascade_frontalface_default.xml');
 cam=cv2.VideoCapture(1);
 rec=cv2.face.LBPHFaceRecognizer_create();
 rec.read("recognizer\\traningData.yml")
 i=0
 switch=False
-Id=0
+
 t_end=time.time()+10
-        
+
 font = cv2.FONT_HERSHEY_COMPLEX_SMALL
 while(time.time()<=t_end):
         ret,img=cam.read();
@@ -57,14 +75,25 @@ cam.release()
 cv2.destroyAllWindows()
 
 if switch==True:
-        print("Person Identified as: " + name + " ID: "+str(Id))
-            #print()
-        inputAns=raw_input("Are you sure that you want to delete everything?\nDoing so"
-                " will deauthorize you from the system.\nEnter Y for yes, N for No: ")
-        if inputAns=='y' or inputAns=='Y':
-                t.DeleteImformation(name,Id)
-        else:
-                print("Bailing out")
+        root=Tk()
+        root.title("Are you sure?")
+        root.geometry("450x150+500+400")
+        unAuthorizedLabel= Label(root,text=str(name)+", This will destroy all your files and you won't be \nrecognized by the system. \nAre you sure?",
+                        font=("arial",12,"bold")).place(x=25,y=25)
+
+        yesButton= Button(root, text="Yes", width=25, height=2,
+                command=yesButton).place(x=2,y=100)
+        noButton= Button(root, text="No", width=25, height=2,
+                command=noButton).place(x=263,y=100)
+        root.mainloop();
+
 else:
-        print("You are unauthorized to make these changes")
-#        print switch
+        root=Tk()
+        root.title("Unauthorized access")
+        root.geometry("450x150+500+400")
+        unAuthorizedLabel= Label(root,text="         You are unauthorized to make these changes!",
+                 font=("arial",12,"bold")).place(x=10,y=30)
+
+        okButton= Button(root, text="Ok", width=25, height=2,
+                     command=okButton).place(x=140,y=100)
+        root.mainloop();
