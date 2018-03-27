@@ -51,19 +51,19 @@ sampleNum=0;
         #Frontal face capture
 serialID=0
 if len(name.get()) == 0:
-    print("Cant leave name field empty")
+    print ("Cant leave name field empty")
     serialID=0
 else:
     cam=cv2.VideoCapture(1);
 
     if os.path.isfile(path):
-        print("File exists")
+        #print("File exists")
         g=open(path,"r")
         serialID=int(g.read())
         serialID=serialID+1
         g.close()
     else:
-        print("File does not exist. Create one fam")
+        #print("File does not exist. Create one fam")
         f=open(path,"w+")
         serialID=serialID+1
         f.close();
