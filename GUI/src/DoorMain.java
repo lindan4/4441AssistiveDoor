@@ -34,6 +34,14 @@ public class DoorMain {
 	
 	private JLabel Prompts;
 	
+	private Timer tOne;
+	private Timer tTwo;
+	private Timer tThree;
+	private Timer tFour;
+	private Timer tFive;
+	private Timer tSix;
+	private Timer tSeven;
+	
 	
 	//private Timer t = new Timer();
  
@@ -167,12 +175,13 @@ public class DoorMain {
 			
 		// Transition from inactive state to active state
 			
-			Timer tOne = new Timer(5000, new ActionListener() 
+			tOne = new Timer(5000, new ActionListener() 
 			{
 				  @Override
 				  public void actionPerformed(ActionEvent arg0) 
 				  {
 				    secondState();
+				    tOne.stop();
 				  }
 				}	  
 			);
@@ -191,12 +200,13 @@ public class DoorMain {
 		Prompts.setText("Hello There!");
 		
 		
-		Timer tTwo = new Timer(5000, new ActionListener()
+		tTwo = new Timer(5000, new ActionListener()
 		{
 			  @Override
 			  public void actionPerformed(ActionEvent arg0) 
 			  {
 			    thirdState();
+			    tTwo.stop();
 			  }
 			}	  
 		);
@@ -208,12 +218,13 @@ public class DoorMain {
 		Prompts.setText("Please position your face \nin front of the camera.");
 		
 		
-		Timer tThree = new Timer(5000, new ActionListener()
+		tThree = new Timer(5000, new ActionListener()
 		{
 			  @Override
 			  public void actionPerformed(ActionEvent arg0) 
 			  {
 			    fourthState();
+			    tThree.stop();
 			  }
 			}	  
 		);
@@ -234,12 +245,13 @@ public class DoorMain {
 		Prompts.setText("Correct. Turning on microphone now.");
 		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
 		
-		Timer tFour = new Timer(5000, new ActionListener()
+		tFour = new Timer(5000, new ActionListener()
 		{
 			  @Override
 			  public void actionPerformed(ActionEvent arg0) 
 			  {
 			    fifthState();
+			    tFour.stop();
 			  }
 			}	  
 		);
@@ -261,16 +273,18 @@ public class DoorMain {
 		voiceRecogButton.setIcon(new ImageIcon("images/SpeechDots.png"));
 		Prompts.setText("Please say pass phrase now.");
 		
-		Timer tSix = new Timer(5000, new ActionListener()
+		tFive = new Timer(5000, new ActionListener()
 		{
 			  @Override
 			  public void actionPerformed(ActionEvent arg0) 
 			  {
 			    sixthState();
+			    tFive.stop();
+			    
 			  }
 			}	  
 		);
-		tSix.start();
+		tFive.start();
 		
 		
 	}
@@ -281,16 +295,17 @@ public class DoorMain {
 		progressBarButton.setIcon(new ImageIcon("images/ThreeFourth.png"));
 		Prompts.setText("Correct. Door is now unlocking.");
 		
-		Timer tSeven = new Timer(5000, new ActionListener()
+		tSix = new Timer(5000, new ActionListener()
 		{
 			  @Override
 			  public void actionPerformed(ActionEvent arg0) 
 			  {
 			    seventhState();
+			    tSix.stop();
 			  }
 			}	  
 		);
-		tSeven.start();
+		tSix.start();
 		
 	}
 	
