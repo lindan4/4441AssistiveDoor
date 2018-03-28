@@ -131,9 +131,9 @@ public class Main {
 			System.out.println("Speech was not understood");
 		}
 
-		boolean passphraseExists = getPassphrase(name).equals(currentTestCaseText);
+	//	boolean passphraseExists = getPassphrase(name).equals(currentTestCaseText);
 
-		int high = getConfidence(getCurrentTestCaseFile(), name);
+		float high = getConfidence(getCurrentTestCaseFile(), name);
 
 		if (high > threshhold) {
 			return true;
@@ -142,12 +142,12 @@ public class Main {
 
 	}
 
-	private int getConfidence(String currentTestCaseFile, String name)
+	private float getConfidence(String currentTestCaseFile, String name)
 			{
 		Recognito recognito = inprintModel(name);
-		int high = 0;
+		//int high = 0;
 		
-		int above = 0;
+		float above = 0;
 		
 		
 
@@ -164,12 +164,12 @@ public class Main {
 		for (MatchResult<String> match : matches) {
 			System.out.println("File : " + match.getKey() + " .... Confidence %: " + match.getLikelihoodRatio());
 			
-			if(match.getLikelihoodRatio() <= 50) {
-				above++;
+			if(match.getLikelihoodRatio() >= 50) {
+				above ++;
 			}
-			if (high < match.getLikelihoodRatio()) {
-				high = match.getLikelihoodRatio();
-			}
+		//	if (high < match.getLikelihoodRatio()) {
+		//		high = match.getLikelihoodRatio();
+			//}
 
 		}
 		
@@ -178,11 +178,9 @@ public class Main {
 		above  = (above / matches.size())*100;
 		
 		
-		if (high > above) {
-			return high;
-		}else {
+		System.out.println(above + " " + matches.size() );
 			return above;
-		}
+		
 
 	}
 

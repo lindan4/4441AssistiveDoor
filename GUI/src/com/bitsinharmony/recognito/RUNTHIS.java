@@ -131,19 +131,18 @@ public class RUNTHIS {
 
 			String name = scanner.nextLine();
 
-			// weird null error work around
+			// line in weird null error work around
 			do {
 				System.out.println("Who are you trying to validate?");
 				name = scanner.nextLine();
 			} while (name == null);
 
+			
+			
+			
 			if (voc.checkModelSatus(name)) {
-			//	voc.recordTestCase();
+				voc.recordTestCase();
 			}
-			
-			voc.checkTestcase();
-			voc.getAllPassphrase();
-			
 			
 			if (voc.checkTestcase()) {
 			System.out.println(	"Passphrase = " + voc.validatePassphrase(name));
