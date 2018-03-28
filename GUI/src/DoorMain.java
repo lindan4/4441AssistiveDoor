@@ -43,6 +43,11 @@ public class DoorMain {
 	private Timer tOne;
 	private Timer tTwo;
 	private Timer tThree;
+	private Timer tThreeA;
+	private Timer tThreeB;
+	private Timer tThreeC;
+	
+	
 	private Timer tFour;
 	private Timer tFive;
 	private Timer tSix;
@@ -204,7 +209,11 @@ public class DoorMain {
 	private void secondState()
 	{
 		activeIconButton.setIcon(new ImageIcon("images/PowerActive.png"));
+		faceRecogButton.setIcon(new ImageIcon("images/HappyInactive.png"));
+		voiceRecogButton.setIcon(new ImageIcon("images/PhraseInactive.png"));
+		doorLockButton.setIcon(new ImageIcon("images/Lock.png"));
 		progressBarButton.setIcon(new ImageIcon("images/OneFourth.png"));
+		
 		Prompts.setText("Hello There!");
 		
 		
@@ -223,13 +232,19 @@ public class DoorMain {
 	
 	private void thirdState()
 	{
+		activeIconButton.setIcon(new ImageIcon("images/PowerActive.png"));
+		faceRecogButton.setIcon(new ImageIcon("images/SeriousInactive.png"));
+		voiceRecogButton.setIcon(new ImageIcon("images/PhraseInactive.png"));
+		doorLockButton.setIcon(new ImageIcon("images/Lock.png"));
+		progressBarButton.setIcon(new ImageIcon("images/OneFourth.png"));
+		
 		Prompts.setText("Please position your face \nin front of the camera.");
 		
 		
 		//
 		
 		
-		tThree = new Timer(1500, new ActionListener()
+		tThree = new Timer(1, new ActionListener()
 		{
 			  @Override
 			  public void actionPerformed(ActionEvent arg0) 
@@ -242,21 +257,67 @@ public class DoorMain {
 			  	
 			  	if (pseudoBoolean.equals("True") &&  !identifiedName.equals("Unknown"))
 			  	{
-			  		activeIconButton.setIcon(new ImageIcon("images/HappyActive.png"));
+			  		activeIconButton.setIcon(new ImageIcon("images/PowerActive.png"));
+			  		faceRecogButton.setIcon(new ImageIcon("images/HappyActive.png"));
+			  		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
+					voiceRecogButton.setIcon(new ImageIcon("images/PhraseInactive.png"));
+			  		doorLockButton.setIcon(new ImageIcon("images/Lock.png"));
+			  		
+			  		Prompts.setText("Correct. Turning on microphone now.");
+			  	
+			  		tThreeA = new Timer(3000, new ActionListener()
+			  		{
+			  			@Override
+			  			public void actionPerformed(ActionEvent arg0) 
+			  			{
+			  				fourthState();
+			  				tThreeA.stop();
+			  			}
+			  		}	  
+			  		);
+			  		tThreeA.start();
 			  		
 			  	}
 			  	else if (pseudoBoolean.equals("False") && identifiedName.equals("Unknown"))
 			  	{
+			  		faceRecogButton.setIcon(new ImageIcon("images/ErrorFacial.png"));
+			  		Prompts.setText("Invalid person. Please try again.");
+			  		progressBarButton.setIcon(new ImageIcon("images/OneFourth.png"));
 			  		
+			  		tThreeB = new Timer(1500, new ActionListener()
+			  		{
+			  			@Override
+			  			public void actionPerformed(ActionEvent arg0) 
+			  			{
+			  				thirdState();
+			  				tThreeB.stop();
+			  			}
+			  		}	  
+			  		);
+			  		tThreeB.start();
 			  	}
 			  	else
 			  	{
+			  		faceRecogButton.setIcon(new ImageIcon("images/ErrorFacial.png"));
+			  		Prompts.setText("There was a system error. Rebooting camera.");
+			  		progressBarButton.setIcon(new ImageIcon("images/OneFourth.png"));
 			  		
+			  		tThreeC = new Timer(1500, new ActionListener()
+			  		{
+			  			@Override
+			  			public void actionPerformed(ActionEvent arg0) 
+			  			{
+			  				thirdState();
+			  				tThreeC.stop();
+			  			}
+			  		}	  
+			  		);
+			  		tThreeC.start();
 			  	}
 			  	
 			  	
 			    //fourthState();
-			  	System.out.println(faceValidator.toString());
+			  	//System.out.println(faceValidator.toString());
 			    tThree.stop();
 			  }
 			}	  
@@ -275,9 +336,11 @@ public class DoorMain {
 		 * 3. System error: output prompt stating error, reset device, try again.
 		 */
 		
+		/*
 		faceRecogButton.setIcon(new ImageIcon("images/HappyActive.png"));
 		Prompts.setText("Correct. Turning on microphone now.");
 		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
+		*/
 		
 		tFour = new Timer(5000, new ActionListener()
 		{
