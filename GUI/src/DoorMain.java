@@ -11,6 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import Interface.Main;
+
 import javax.swing.Timer;
 
 import java.awt.event.ActionListener;
@@ -250,7 +253,7 @@ public class DoorMain {
 			  @Override
 			  public void actionPerformed(ActionEvent arg0) 
 			  {
-			    fifthState();
+			  //  fifthState(); // <---------------------------- needs a name
 			    tFour.stop();
 			  }
 			}	  
@@ -258,9 +261,45 @@ public class DoorMain {
 		tFour.start();
 		
 	}
-	
-	private void fifthState()
+	//the name is collected from Saads code so the voice can know which model it is trying to authenticate
+	private void fifthState(String name)
 	{
+		
+		 
+		
+		Main voc = new Main();
+		
+		// WATCH console for fixing bugs 
+		
+		// checks to see if enough models and the file path exists
+		if(voc.checkModelSatus(name)) {
+			
+			// add some delay if you want
+			voc.recordTestCase();
+		}
+		
+		
+		// WATCH console for fixing bugs 
+		
+		// test to make sure the speech was heard by azure
+		if(voc.checkTestcase()) {
+			// 
+			voc.validatePassphrase(name);
+			voc.validateUser(name, 50);
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
 		/*
 		 * Three cases:
 		 * 
