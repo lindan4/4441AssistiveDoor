@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -12,11 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import FaceRecognizer.LinkerMethods;
 import Interface.Main;
 
 import javax.swing.Timer;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Component;
@@ -44,6 +47,8 @@ public class DoorMain {
 	private Timer tFive;
 	private Timer tSix;
 	private Timer tSeven;
+	
+	private ArrayList<String> faceValidator;
 	
 	
 	//private Timer t = new Timer();
@@ -221,17 +226,43 @@ public class DoorMain {
 		Prompts.setText("Please position your face \nin front of the camera.");
 		
 		
-		tThree = new Timer(5000, new ActionListener()
+		//
+		
+		
+		tThree = new Timer(1500, new ActionListener()
 		{
 			  @Override
 			  public void actionPerformed(ActionEvent arg0) 
 			  {
-			    fourthState();
+			  	faceValidator = LinkerMethods.callDetector();
+			  	
+			  	String pseudoBoolean = faceValidator.get(0);
+			  	String identifiedName = faceValidator.get(1);
+			  	int personID = Integer.parseInt(faceValidator.get(2));
+			  	
+			  	if (pseudoBoolean.equals("True") &&  !identifiedName.equals("Unknown"))
+			  	{
+			  		activeIconButton.setIcon(new ImageIcon("images/HappyActive.png"));
+			  		
+			  	}
+			  	else if (pseudoBoolean.equals("False") && identifiedName.equals("Unknown"))
+			  	{
+			  		
+			  	}
+			  	else
+			  	{
+			  		
+			  	}
+			  	
+			  	
+			    //fourthState();
+			  	System.out.println(faceValidator.toString());
 			    tThree.stop();
 			  }
 			}	  
 		);
 		tThree.start();
+		
 	}
 	
 	private void fourthState()

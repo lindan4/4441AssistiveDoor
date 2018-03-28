@@ -18,7 +18,7 @@ public final class LinkerMethods {
 	public static ArrayList<String> callDetector(){
 		ArrayList<String> returnVals= new ArrayList<String>();
 		try {
-			Process p =Runtime.getRuntime().exec("C:\\\\Python27\\\\python.exe detector.py"); //Need to install python in the directory of the program
+			Process p =Runtime.getRuntime().exec("cmd /c ../FaceRecognition/detector.py"); //Need to install python in the directory of the program
 			//Input stream from the executable
 			InputStream is = p.getInputStream();
 			
@@ -29,7 +29,7 @@ public final class LinkerMethods {
 				sb.append((char)i);
 			}
 			
-			//System.out.println(sb.toString());
+			System.out.println(sb.toString());
 			
 			
 			Scanner scan= new Scanner(sb.toString());
@@ -46,7 +46,7 @@ public final class LinkerMethods {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 			returnVals.clear();
 			returnVals.add("false");
 			returnVals.add("error");
