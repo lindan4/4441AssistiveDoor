@@ -303,28 +303,33 @@ public class DoorMain {
 		// WATCH console for fixing bugs 
 		
 		// checks to see if enough models and the file path exists
-		if(voc.checkModelSatus(name)) {
+		if(voc.checkModelSatus(name)) { //CASE 3
 			
 			// add some delay if you want
+		
 			voc.recordTestCase();
 		}
 		
 		
-		// WATCH console for fixing bugs 
 		
-		// test to make sure the speech was heard by azure
-		if(voc.checkTestcase()) {
-			// 
-			voc.validatePassphrase(name);
-			voc.validateUser(name, 50);
+		
+		
+		Boolean HAS_VOICE_PASSED_TEST;
+		
+		// WATCH console for fixing bugs if any
+		// test to make sure the speech was heard by azure 
+		if(voc.checkTestcase()) {  //CASE 3
 			
+			// this does the validation  CASE 1 = true  CASE 2 = false
+			HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name) && voc.validateUser(name, 50);
+	
 		}
 		
 		
 		
 		
 		
-		
+		// you can test this same code without the gui in RunnTHis.java   --->   test fifth case
 		
 
 		
