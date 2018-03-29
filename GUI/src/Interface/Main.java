@@ -300,7 +300,7 @@ public class Main {
 			}
 
 			speechToText(getCurrentTestCaseFile());
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			System.out.println(
 					"Speech to text did not understand what was said >> prompt user for repeat and call record test case method again");
 			return false;
