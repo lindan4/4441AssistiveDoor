@@ -58,6 +58,7 @@ public class ExtendedExample extends JPanel implements ActionListener {
 
   private final JButton openButton, micButton;
   private final JTextArea log;
+  
   private final JFileChooser fc;
   private final JTextField keyField;
 

@@ -41,7 +41,9 @@ public class DoorMain {
 	private JLabel Prompts;
 	
 	private Timer tOne;
+	
 	private Timer tTwo;
+	
 	private Timer tThree;
 	private Timer tThreeA;
 	private Timer tThreeB;
@@ -49,11 +51,16 @@ public class DoorMain {
 	
 	
 	private Timer tFour;
+	
 	private Timer tFive;
+	private Timer tFiveA;
+	
 	private Timer tSix;
+	
 	private Timer tSeven;
 	
 	private ArrayList<String> faceValidator;
+	private String faceName;
 	
 	
 	//private Timer t = new Timer();
@@ -153,7 +160,7 @@ public class DoorMain {
 			doorLockButton.setBounds(140, 18, 900, 720);
 			home.add(doorLockButton);
 	
-			Prompts = new JLabel("Why?");
+			Prompts = new JLabel("");
 			Prompts.setHorizontalAlignment(SwingConstants.CENTER);
 			Prompts.setForeground(new Color(255, 255, 255));
 			Prompts.setFont(new Font("Arial", Font.PLAIN, 36));
@@ -263,14 +270,16 @@ public class DoorMain {
 					voiceRecogButton.setIcon(new ImageIcon("images/PhraseInactive.png"));
 			  		doorLockButton.setIcon(new ImageIcon("images/Lock.png"));
 			  		
-			  		Prompts.setText("Correct. Turning on microphone now.");
+			  		Prompts.setText("Face verified. Turning on microphone now.");
 			  	
+			  		faceName = faceValidator.get(1);
+			  		
 			  		tThreeA = new Timer(3000, new ActionListener()
 			  		{
 			  			@Override
 			  			public void actionPerformed(ActionEvent arg0) 
 			  			{
-			  				fourthState();
+			  				fifthState(faceName);
 			  				tThreeA.stop();
 			  			}
 			  		}	  
@@ -326,67 +335,58 @@ public class DoorMain {
 		
 	}
 	
-	private void fourthState()
+	
+	//the name is collected from Saads code so the voice can know which model it is trying to authenticate
+	private void fifthState(String name)
 	{
-		/*
-		 * Three cases:
-		 * 
-		 * 1. Correct face: move on to state 5
-		 * 2. Wrong face: invalid, please try again
-		 * 3. System error: output prompt stating error, reset device, try again.
-		 */
+		voiceRecogButton.setIcon(new ImageIcon("images/SpeechDots.png"));
+		Prompts.setText("Please say pass phrase now.");
 		
-		/*
-		faceRecogButton.setIcon(new ImageIcon("images/HappyActive.png"));
-		Prompts.setText("Correct. Turning on microphone now.");
-		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
-		*/
-		
-		tFour = new Timer(5000, new ActionListener()
+		 
+		tFive = new Timer(180, new ActionListener()
 		{
 			  @Override
 			  public void actionPerformed(ActionEvent arg0) 
 			  {
-			  //  fifthState(); // <---------------------------- needs a name
-			    tFour.stop();
+			    //sixthState();
+				  Main voc = new Main();
+					
+					// WATCH console for fixing bugs 
+					
+					// checks to see if enough models and the file path exists
+				if(voc.checkModelSatus(name)) 
+				{ //CASE 3
+						
+					// add some delay if you want
+					
+					voc.recordTestCase();
+				}
+						
+				boolean HAS_VOICE_PASSED_TEST = false;
+					
+				// WATCH console for fixing bugs if any
+				// test to make sure the speech was heard by azure 
+				if(voc.checkTestcase()) 
+				{  //CASE 3
+						
+						// this does the validation  CASE 1 = true  CASE 2 = false
+						HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name) && voc.validateUser(name, 50);
+						
+				} 
+				
+				if (HAS_VOICE_PASSED_TEST)
+				{
+					System.out.println("Heard");
+
+				}
+				  
+			    tFive.stop();
+			    
 			  }
 			}	  
 		);
-		tFour.start();
+		tFive.start();
 		
-	}
-	//the name is collected from Saads code so the voice can know which model it is trying to authenticate
-	private void fifthState(String name)
-	{
-		
-		 
-		
-		Main voc = new Main();
-		
-		// WATCH console for fixing bugs 
-		
-		// checks to see if enough models and the file path exists
-		if(voc.checkModelSatus(name)) { //CASE 3
-			
-			// add some delay if you want
-		
-			voc.recordTestCase();
-		}
-		
-		
-		
-		
-		
-		Boolean HAS_VOICE_PASSED_TEST;
-		
-		// WATCH console for fixing bugs if any
-		// test to make sure the speech was heard by azure 
-		if(voc.checkTestcase()) {  //CASE 3
-			
-			// this does the validation  CASE 1 = true  CASE 2 = false
-			HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name) && voc.validateUser(name, 50);
-	
-		}
 		
 		
 		
@@ -408,21 +408,8 @@ public class DoorMain {
 		 */
 		
 		
-		voiceRecogButton.setIcon(new ImageIcon("images/SpeechDots.png"));
-		Prompts.setText("Please say pass phrase now.");
 		
-		tFive = new Timer(5000, new ActionListener()
-		{
-			  @Override
-			  public void actionPerformed(ActionEvent arg0) 
-			  {
-			    sixthState();
-			    tFive.stop();
-			    
-			  }
-			}	  
-		);
-		tFive.start();
+		
 		
 		
 	}
