@@ -337,11 +337,13 @@ public class DoorMain {
 	
 	
 	//the name is collected from Saads code so the voice can know which model it is trying to authenticate
-	private void fifthState(String name)
+	private void fifthState(String name_temp)
+	
+	
 	{
 		voiceRecogButton.setIcon(new ImageIcon("images/SpeechDots.png"));
 		Prompts.setText("Please say pass phrase now.");
-		
+		final String name = name_temp;
 		 
 		tFive = new Timer(180, new ActionListener()
 		{
@@ -353,7 +355,8 @@ public class DoorMain {
 					
 					// WATCH console for fixing bugs 
 					
-					// checks to see if enough models and the file path exists
+					
+				// checks to see if enough models and the file path exists
 				if(voc.checkModelSatus(name)) 
 				{ //CASE 3
 						

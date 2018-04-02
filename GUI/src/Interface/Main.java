@@ -21,9 +21,9 @@ import com.microsoft.cognitive_services.speech_recognition.examples.SimpleExampl
 
 public class Main {
 
-	final static String PASSPHASE_FILE_NAME = "\\PassPhrase.txt";
-	final File ModelRoot = new File("Models\\");
-	final File TestRoot = new File("Tests\\");
+	final static String PASSPHASE_FILE_NAME = File.separator + "PassPhrase.txt";
+	final File ModelRoot = new File("Models" + File.separator);
+	final File TestRoot = new File("Tests" + File.separator);
 
 	final float sampleRate = 16000.0f;
 
@@ -46,7 +46,7 @@ public class Main {
 	// return true if was able to add new model
 
 	public boolean createModel(String name) {
-		String filePathString = ModelRoot.getPath() + "/" + name + "/";
+		String filePathString = ModelRoot.getPath() + File.separator + name + File.separator;
 		File f = new File(filePathString);
 		if (f.isDirectory()) {
 			return true;
@@ -60,9 +60,9 @@ public class Main {
 	// record model and return file path + file name
 	public String recordModel(String name) throws ParseException, IOException {
 		if (createModel(name)) {
-			String filePathString = ModelRoot.getPath() + "/" + name + "/";
+			String filePathString = ModelRoot.getPath() + File.separator + name + File.separator;
 			JavaSoundRecorder jsr = new JavaSoundRecorder(filePathString);
-			jsr.run(recordingTime);
+			jsr.run();
 
 			speechToText(jsr.getfilePath(), filePathString);
 
@@ -101,7 +101,7 @@ public class Main {
 	// gets pass phrase of a specified user
 	public String getPassphrase(String name) {
 		try {
-			return FileReadWrite.read(ModelRoot.getPath() + "\\" + name + "\\" + PASSPHASE_FILE_NAME).trim();
+			return FileReadWrite.read(ModelRoot.getPath() + File.separator + name + File.separator + PASSPHASE_FILE_NAME).trim();
 		} catch (IOException e) {
 			//System.out.println("Could not read passphrase for " + name);
 			return null;
@@ -220,7 +220,7 @@ public class Main {
 	public String recordTestCase() {
 
 		JavaSoundRecorder jsr = new JavaSoundRecorder(TestRoot.getAbsolutePath());
-		jsr.run(recordingTime);
+		jsr.run();
 		return getCurrentTestCaseFile();
 	}
 
@@ -234,7 +234,7 @@ public class Main {
 
 	private Recognito inprintModel(String name) {
 
-		File datafolder = new File(ModelRoot.getAbsolutePath() + "\\" + name);
+		File datafolder = new File(ModelRoot.getAbsolutePath() + File.separator + name);
 
 		Recognito reg = new Recognito<>(sampleRate);
 
