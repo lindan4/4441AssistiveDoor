@@ -371,7 +371,7 @@ public class DoorMain {
 						
 						// this does the validation  CASE 1 = true  CASE 2 = false
 						HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name) && voc.validateUser(name, 50);
-						
+						//System.out.println(HAS_VOICE_PASSED_TEST);
 				} 
 				
 				if (HAS_VOICE_PASSED_TEST)
