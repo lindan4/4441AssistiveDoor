@@ -375,7 +375,8 @@ public class DoorMain {
 				{  //CASE 3
 						
 						// this does the validation  CASE 1 = true  CASE 2 = false
-						HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name) && voc.validateUser(name, 50);
+						HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name);
+								//&& voc.validateUser(name, 50);
 						//System.out.println(HAS_VOICE_PASSED_TEST);
 				}
 				else
@@ -402,9 +403,24 @@ public class DoorMain {
 				// Voice passed
 				if (HAS_VOICE_PASSED_TEST)
 				{
+					voiceRecogButton.setIcon(new ImageIcon("images/SpeechActive.png"));
+					progressBarButton.setIcon(new ImageIcon("images/ThreeFourth.png"));
+					Prompts.setText("Correct. Door is now unlocking.");
+					
+					tFiveB = new Timer(5000, new ActionListener()
+			  		{
+			  			@Override
+			  			public void actionPerformed(ActionEvent arg0) 
+			  			{
+			  				seventhState();
+			  				tFiveB.stop();
+			  			}
+			  		}	  
+			  		);
+					
+					tFiveB.start();
 					
 					
-					sixthState();
 
 				}
 				else
