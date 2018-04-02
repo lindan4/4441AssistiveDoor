@@ -16,6 +16,7 @@ public class JavaSoundRecorder {
  
     // the line from which audio data is captured
     TargetDataLine line;
+	
  
     public JavaSoundRecorder(String pathname) {
     	this.wavFile = new File(pathname);
@@ -88,7 +89,7 @@ public class JavaSoundRecorder {
     /**
      * Entry to run the program
      */
-    public void run(long time) {
+    public void run() {
     	 wavID = System.currentTimeMillis() + "";
    
         final JavaSoundRecorder recorder = new JavaSoundRecorder(wavFile.getPath() + "/" +wavID +".wav");
@@ -98,7 +99,7 @@ public class JavaSoundRecorder {
         Thread stopper = new Thread(new Runnable() {
             public void run() {
                 try {
-                    Thread.sleep(time);
+                    Thread.sleep(RECORD_TIME);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -113,7 +114,7 @@ public class JavaSoundRecorder {
     }
 
 	public String getfilePath() {
-		return this.wavFile.getAbsolutePath() +   "\\" +wavID +".wav"  ;
+		return this.wavFile.getAbsolutePath() +   File.separator +wavID +".wav"  ;
 		
 	}
 }
