@@ -54,8 +54,12 @@ public class DoorMain {
 	
 	private Timer tFive;
 	private Timer tFiveA;
+	private Timer tFiveB;
+	private Timer tFiveC;
 	
 	private Timer tSix;
+	private Timer tSixA;
+	private Timer tSixB;
 	
 	private Timer tSeven;
 	
@@ -337,9 +341,7 @@ public class DoorMain {
 	
 	
 	//the name is collected from Saads code so the voice can know which model it is trying to authenticate
-	private void fifthState(String name_temp)
-	
-	
+	private void fifthState(final String name_temp)
 	{
 		voiceRecogButton.setIcon(new ImageIcon("images/SpeechDots.png"));
 		Prompts.setText("Please say pass phrase now.");
@@ -375,12 +377,55 @@ public class DoorMain {
 						// this does the validation  CASE 1 = true  CASE 2 = false
 						HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name) && voc.validateUser(name, 50);
 						//System.out.println(HAS_VOICE_PASSED_TEST);
-				} 
+				}
+				else
+				{
+					voiceRecogButton.setIcon(new ImageIcon("images/ErrorSpeech.png"));
+			  		Prompts.setText("There was a system error. Restarting voice module.");
+			  		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
+			  		
+					//System error. Please try again
+					tFiveA = new Timer(5000, new ActionListener()
+			  		{
+			  			@Override
+			  			public void actionPerformed(ActionEvent arg0) 
+			  			{
+			  				fifthState(name_temp);
+			  				tFiveA.stop();
+			  			}
+			  		}	  
+			  		);
+					tFiveA.start();
+					
+				}
 				
+				// Voice passed
 				if (HAS_VOICE_PASSED_TEST)
 				{
-					System.out.println("Heard");
+					
+					
+					sixthState();
 
+				}
+				else
+				{
+					voiceRecogButton.setIcon(new ImageIcon("images/ErrorSpeech.png"));
+			  		Prompts.setText("Invalid passphrase. Please try again.");
+			  		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
+				
+			  		tFiveC = new Timer(5000, new ActionListener()
+			  		{
+			  			@Override
+			  			public void actionPerformed(ActionEvent arg0) 
+			  			{
+			  				fifthState(name_temp);
+			  				tFiveC.stop();
+			  			}
+			  		}	  
+			  		);
+			  		
+			  		tFiveC.start();
+			  		
 				}
 				  
 			    tFive.stop();
