@@ -468,6 +468,8 @@ public class DoorMain {
 		progressBarButton.setIcon(new ImageIcon("images/ThreeFourth.png"));
 		Prompts.setText("Correct. Door is now unlocking.");
 		
+		
+		
 		tSix = new Timer(5000, new ActionListener()
 		{
 			  @Override
