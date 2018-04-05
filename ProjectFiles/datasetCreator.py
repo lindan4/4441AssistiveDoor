@@ -45,6 +45,7 @@ okButton= Button(root, text="Ok", width=25, height=2,
 
 root.mainloop();
 
+font = cv2.FONT_HERSHEY_COMPLEX_SMALL
 sampleNum=0;
         #id=raw_input('Please enter your name: ')
 
@@ -79,6 +80,7 @@ else:
             sampleNum=sampleNum+1;
             cv2.imwrite("facesData/"+str(name.get())+"."+ str(serialID)+"." +str(sampleNum)+ ".jpg", gray[y:y+h, x:x+w])
             cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
+            cv2.putText(img,"Picture "+str(sampleNum)+" of 101",(x,y+h),font,1.0,(0,255,0));
             cv2.waitKey(100);
         cv2.imshow("face",img);
         cv2.waitKey(1)

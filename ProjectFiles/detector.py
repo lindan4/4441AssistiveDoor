@@ -34,6 +34,8 @@ name="Unknown"
 sentinel=False
 Id=0    
 while time.time()<=t_end:
+        cv2.namedWindow('image',cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('image', 600,500)
         ret,img=cam.read();
         gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY);
         faces=faceDetect.detectMultiScale(gray,1.3,5);
@@ -47,8 +49,8 @@ while time.time()<=t_end:
                 else:
                         name="Unknown"
                 #cv2.putText(img,str(name),(x,y+h),font,3.0,(0,255,0));
-                
-        cv2.imshow("face",img);
+        
+        cv2.imshow("image",img);
         cv2.waitKey(1)
              #   break;
 cam.release()
