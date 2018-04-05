@@ -81,7 +81,7 @@ else:
             cv2.imwrite("facesData/"+str(name.get())+"."+ str(serialID)+"." +str(sampleNum)+ ".jpg", gray[y:y+h, x:x+w])
             cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
             cv2.putText(img,"Picture "+str(sampleNum)+" of 101",(x,y+h),font,1.0,(0,255,0));
-            cv2.waitKey(100);
+            cv2.waitKey(50);
         cv2.imshow("face",img);
         cv2.waitKey(1)
         if(sampleNum>100):
