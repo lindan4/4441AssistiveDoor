@@ -2,7 +2,7 @@ import cv2
 import time 
 import numpy as np
 import sqlite3
-
+from Tkinter import *
 
 def tableInsert(Id):
         name=0
@@ -32,7 +32,15 @@ t_end=time.time()+10
 name="Unknown"
 
 sentinel=False
-Id=0    
+Id=0
+root = Tk()
+
+# timer
+lbl1 = Label()
+lbl1.pack(fill=BOTH, expand=1)
+root.geometry("250x100+800+100")
+lbl1.config(height=3, font=('times', 20, 'bold'))
+
 while time.time()<=t_end:
         cv2.namedWindow('image',cv2.WINDOW_NORMAL)
         cv2.resizeWindow('image', 600,500)
@@ -52,9 +60,13 @@ while time.time()<=t_end:
         
         cv2.imshow("image",img);
         cv2.waitKey(1)
+        lbl1["text"] ="Done scanning in: "+ str(int(t_end - time.time()))
+        root.update()
              #   break;
 cam.release()
 cv2.destroyAllWindows()
+root.destroy()
+root.mainloop()
 
 if name=="Unknown":
         #print "You are unauthorized to enter!"
