@@ -49,6 +49,8 @@ public class DoorMain {
 	private Timer tThreeB;
 	private Timer tThreeC;
 	
+	private Timer tThreeAllAttempts;
+	
 	
 	private Timer tFour;
 	
@@ -56,6 +58,8 @@ public class DoorMain {
 	private Timer tFiveA;
 	private Timer tFiveB;
 	private Timer tFiveC;
+	
+	private Timer tFiveAllAttempts;
 	
 	private Timer tSix;
 	private Timer tSixA;
@@ -66,6 +70,8 @@ public class DoorMain {
 	private ArrayList<String> faceValidator;
 	private String faceName;
 	
+	private int faceRecogAttempts = 4;
+	private int voiceRecogAttempts = 4;
 	
 	//private Timer t = new Timer();
  
@@ -164,7 +170,7 @@ public class DoorMain {
 			doorLockButton.setBounds(140, 18, 900, 720);
 			home.add(doorLockButton);
 	
-			Prompts = new JLabel("");
+			Prompts = new JLabel("", SwingConstants.CENTER);
 			Prompts.setHorizontalAlignment(SwingConstants.CENTER);
 			Prompts.setForeground(new Color(255, 255, 255));
 			Prompts.setFont(new Font("Arial", Font.PLAIN, 36));
@@ -243,99 +249,140 @@ public class DoorMain {
 	
 	private void thirdState()
 	{
-		activeIconButton.setIcon(new ImageIcon("images/PowerActive.png"));
-		faceRecogButton.setIcon(new ImageIcon("images/SeriousInactive.png"));
-		voiceRecogButton.setIcon(new ImageIcon("images/PhraseInactive.png"));
-		doorLockButton.setIcon(new ImageIcon("images/Lock.png"));
-		progressBarButton.setIcon(new ImageIcon("images/OneFourth.png"));
-		
-		Prompts.setText("Please position your face \nin front of the camera.");
-		
-		
-		//
-		
-		
-		tThree = new Timer(1, new ActionListener()
+		if (faceRecogAttempts != 0)
 		{
-			  @Override
-			  public void actionPerformed(ActionEvent arg0) 
-			  {
-			  	faceValidator = LinkerMethods.callDetector();
-			  	
-			  	String pseudoBoolean = faceValidator.get(0);
-			  	String identifiedName = faceValidator.get(1);
-			  	int personID = Integer.parseInt(faceValidator.get(2));
-			  	
-			  	if (pseudoBoolean.equals("True") &&  !identifiedName.equals("Unknown"))
-			  	{
-			  		activeIconButton.setIcon(new ImageIcon("images/PowerActive.png"));
-			  		faceRecogButton.setIcon(new ImageIcon("images/HappyActive.png"));
-			  		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
-					voiceRecogButton.setIcon(new ImageIcon("images/PhraseInactive.png"));
-			  		doorLockButton.setIcon(new ImageIcon("images/Lock.png"));
-			  		
-			  		Prompts.setText("Face verified. Turning on microphone now.");
-			  	
-			  		faceName = faceValidator.get(1);
-			  		
-			  		tThreeA = new Timer(3000, new ActionListener()
-			  		{
-			  			@Override
-			  			public void actionPerformed(ActionEvent arg0) 
-			  			{
-			  				fifthState(faceName);
-			  				tThreeA.stop();
-			  			}
-			  		}	  
-			  		);
-			  		tThreeA.start();
-			  		
-			  	}
-			  	else if (pseudoBoolean.equals("False") && identifiedName.equals("Unknown"))
-			  	{
-			  		faceRecogButton.setIcon(new ImageIcon("images/ErrorFacial.png"));
-			  		Prompts.setText("Invalid person. Please try again.");
-			  		progressBarButton.setIcon(new ImageIcon("images/OneFourth.png"));
-			  		
-			  		tThreeB = new Timer(1500, new ActionListener()
-			  		{
-			  			@Override
-			  			public void actionPerformed(ActionEvent arg0) 
-			  			{
-			  				thirdState();
-			  				tThreeB.stop();
-			  			}
-			  		}	  
-			  		);
-			  		tThreeB.start();
-			  	}
-			  	else
-			  	{
-			  		faceRecogButton.setIcon(new ImageIcon("images/ErrorFacial.png"));
-			  		Prompts.setText("There was a system error. Rebooting camera.");
-			  		progressBarButton.setIcon(new ImageIcon("images/OneFourth.png"));
-			  		
-			  		tThreeC = new Timer(1500, new ActionListener()
-			  		{
-			  			@Override
-			  			public void actionPerformed(ActionEvent arg0) 
-			  			{
-			  				thirdState();
-			  				tThreeC.stop();
-			  			}
-			  		}	  
-			  		);
-			  		tThreeC.start();
-			  	}
-			  	
-			  	
-			    //fourthState();
-			  	//System.out.println(faceValidator.toString());
-			    tThree.stop();
-			  }
-			}	  
-		);
-		tThree.start();
+			activeIconButton.setIcon(new ImageIcon("images/PowerActive.png"));
+			faceRecogButton.setIcon(new ImageIcon("images/SeriousInactive.png"));
+			voiceRecogButton.setIcon(new ImageIcon("images/PhraseInactive.png"));
+			doorLockButton.setIcon(new ImageIcon("images/Lock.png"));
+			progressBarButton.setIcon(new ImageIcon("images/OneFourth.png"));
+			
+			Prompts.setText("Please position your face \nin front of the camera.");
+			
+			
+			//
+			
+			
+			tThree = new Timer(1, new ActionListener()
+			{
+				  @Override
+				  public void actionPerformed(ActionEvent arg0) 
+				  {
+				  	faceValidator = LinkerMethods.callDetector();
+				  	
+				  	String pseudoBoolean = faceValidator.get(0);
+				  	String identifiedName = faceValidator.get(1);
+				  	int personID = Integer.parseInt(faceValidator.get(2));
+				  	
+				  		if (pseudoBoolean.equals("True") &&  !identifiedName.equals("Unknown"))
+					  	{
+					  		activeIconButton.setIcon(new ImageIcon("images/PowerActive.png"));
+					  		faceRecogButton.setIcon(new ImageIcon("images/HappyActive.png"));
+					  		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
+							voiceRecogButton.setIcon(new ImageIcon("images/PhraseInactive.png"));
+					  		doorLockButton.setIcon(new ImageIcon("images/Lock.png"));
+					  		
+					  		
+					  		Prompts.setText("Face verified. Turning on microphone now.");
+					  		
+					  		faceRecogAttempts = 4;
+					  		
+					  		faceName = faceValidator.get(1);
+					  		
+					  		tThreeA = new Timer(3000, new ActionListener()
+					  		{
+					  			@Override
+					  			public void actionPerformed(ActionEvent arg0) 
+					  			{
+					  				fifthState(faceName);
+					  				tThreeA.stop();
+					  			}
+					  		}	  
+					  		);
+					  		tThreeA.start();
+					  		
+					  	}
+					  	else if (pseudoBoolean.equals("False") && identifiedName.equals("Unknown"))
+					  	{
+					  		faceRecogAttempts--;
+					  		faceRecogButton.setIcon(new ImageIcon("images/ErrorFacial.png"));
+					  		
+					  		Prompts.setText((faceRecogAttempts != 0) ? "<html><center>Invalid person. Please try again.<br /> (" + faceRecogAttempts + " attempt(s) remaining)</center></html>" : "<html><center>Invalid person.</center></html>");
+					  		progressBarButton.setIcon(new ImageIcon("images/OneFourth.png"));
+					  		
+					  		
+					  		
+					  		tThreeB = new Timer(1500, new ActionListener()
+					  		{
+					  			@Override
+					  			public void actionPerformed(ActionEvent arg0) 
+					  			{
+					  				thirdState();
+					  				tThreeB.stop();
+					  			}
+					  		}	  
+					  		);
+					  		tThreeB.start();
+					  	}
+					  	else
+					  	{
+					  		faceRecogButton.setIcon(new ImageIcon("images/ErrorFacial.png"));
+					  		Prompts.setText("There was a system error. Rebooting camera.");
+					  		progressBarButton.setIcon(new ImageIcon("images/OneFourth.png"));
+					  		
+					  		tThreeC = new Timer(1500, new ActionListener()
+					  		{
+					  			@Override
+					  			public void actionPerformed(ActionEvent arg0) 
+					  			{
+					  				thirdState();
+					  				tThreeC.stop();
+					  			}
+					  		}	  
+					  		);
+					  		tThreeC.start();
+					  	}
+				  	
+				  	
+				  	
+				  	
+				    //fourthState();
+				  	//System.out.println(faceValidator.toString());
+				    tThree.stop();
+				  }
+				}	  
+			);
+			tThree.start();
+			
+		}
+		else
+	  	{
+	  		Prompts.setText("<html><center>All attempts used. Please wait 1 minute <br /> before trying again.</center></html>");
+	  		
+	  		activeIconButton.setIcon(new ImageIcon("images/PowerInactive.png"));
+	  		faceRecogButton.setIcon(new ImageIcon("images/HappyInactive.png"));
+	  		progressBarButton.setIcon(new ImageIcon("images/EmptyBar.png"));
+			voiceRecogButton.setIcon(new ImageIcon("images/PhraseInactive.png"));
+	  		doorLockButton.setIcon(new ImageIcon("images/Lock.png"));
+	  		
+	  		tThreeAllAttempts = new Timer(60000, new ActionListener()
+	  		{
+	  			@Override
+	  			public void actionPerformed(ActionEvent arg0) 
+	  			{
+	  				faceRecogAttempts = 4;
+	  				tThreeAllAttempts.stop();
+	  				secondState();
+	  				
+	  			}
+	  		}	  
+	  		);
+	  		tThreeAllAttempts.start();
+
+	  	}
+		
+		
+		
 		
 	}
 	
@@ -343,113 +390,144 @@ public class DoorMain {
 	//the name is collected from Saads code so the voice can know which model it is trying to authenticate
 	private void fifthState(final String name_temp)
 	{
-		voiceRecogButton.setIcon(new ImageIcon("images/SpeechDots.png"));
-		Prompts.setText("Please say pass phrase now.");
-		final String name = name_temp;
-		 
-		tFive = new Timer(180, new ActionListener()
+		if (voiceRecogAttempts != 0)
 		{
-			  @Override
-			  public void actionPerformed(ActionEvent arg0) 
-			  {
-			    //sixthState();
-				  Main voc = new Main();
-					
-					// WATCH console for fixing bugs 
-					
-					
-				// checks to see if enough models and the file path exists
-				if(voc.checkModelSatus(name)) 
-				{ //CASE 3
+			voiceRecogButton.setIcon(new ImageIcon("images/SpeechDots.png"));
+			Prompts.setText("Please say pass phrase now.");
+			final String name = name_temp;
+			 
+			tFive = new Timer(180, new ActionListener()
+			{
+				  @Override
+				  public void actionPerformed(ActionEvent arg0) 
+				  {
+				    //sixthState();
+					  Main voc = new Main();
 						
-					// add some delay if you want
-					
-					voc.recordTestCase();
-				}
+						// WATCH console for fixing bugs 
 						
-				boolean HAS_VOICE_PASSED_TEST = false;
-					
-				// WATCH console for fixing bugs if any
-				// test to make sure the speech was heard by azure 
-				if(voc.checkTestcase()) 
-				{  //CASE 3
 						
-						// this does the validation  CASE 1 = true  CASE 2 = false
-						HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name);
-								//&& voc.validateUser(name, 50);
-						//System.out.println(HAS_VOICE_PASSED_TEST);
-				}
-				else
-				{
-					voiceRecogButton.setIcon(new ImageIcon("images/ErrorSpeech.png"));
-			  		Prompts.setText("There was a system error. Restarting voice module.");
-			  		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
-			  		
-					//System error. Please try again
-					tFiveA = new Timer(5000, new ActionListener()
-			  		{
-			  			@Override
-			  			public void actionPerformed(ActionEvent arg0) 
-			  			{
-			  				fifthState(name_temp);
-			  				tFiveA.stop();
-			  			}
-			  		}	  
-			  		);
-					tFiveA.start();
+					// checks to see if enough models and the file path exists
+					if(voc.checkModelSatus(name)) 
+					{ //CASE 3
+							
+						// add some delay if you want
+						
+						voc.recordTestCase();
+					}
+							
+					boolean HAS_VOICE_PASSED_TEST = false;
+						
+					// WATCH console for fixing bugs if any
+					// test to make sure the speech was heard by azure 
+					if(voc.checkTestcase()) 
+					{  //CASE 3
+							
+							// this does the validation  CASE 1 = true  CASE 2 = false
+							HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name);
+									//&& voc.validateUser(name, 50);
+							//System.out.println(HAS_VOICE_PASSED_TEST);
+					}
+					else
+					{
+						voiceRecogButton.setIcon(new ImageIcon("images/ErrorSpeech.png"));
+				  		Prompts.setText("There was a system error. Restarting voice module.");
+				  		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
+				  		
+						//System error. Please try again
+						tFiveA = new Timer(5000, new ActionListener()
+				  		{
+				  			@Override
+				  			public void actionPerformed(ActionEvent arg0) 
+				  			{
+				  				fifthState(name_temp);
+				  				tFiveA.stop();
+				  			}
+				  		}	  
+				  		);
+						tFiveA.start();
+						
+					}
 					
-				}
-				
-				// Voice passed
-				if (HAS_VOICE_PASSED_TEST)
-				{
-					voiceRecogButton.setIcon(new ImageIcon("images/SpeechActive.png"));
-					progressBarButton.setIcon(new ImageIcon("images/ThreeFourth.png"));
-					Prompts.setText("Correct. Door is now unlocking.");
-					
-					tFiveB = new Timer(5000, new ActionListener()
-			  		{
-			  			@Override
-			  			public void actionPerformed(ActionEvent arg0) 
-			  			{
-			  				seventhState();
-			  				tFiveB.stop();
-			  			}
-			  		}	  
-			  		);
-					
-					tFiveB.start();
-					
-					
+					// Voice passed
+					if (HAS_VOICE_PASSED_TEST)
+					{
+						voiceRecogButton.setIcon(new ImageIcon("images/SpeechActive.png"));
+						progressBarButton.setIcon(new ImageIcon("images/ThreeFourth.png"));
+						Prompts.setText("Correct. Door is now unlocking.");
+						
+						tFiveB = new Timer(5000, new ActionListener()
+				  		{
+				  			@Override
+				  			public void actionPerformed(ActionEvent arg0) 
+				  			{
+				  				seventhState();
+				  				tFiveB.stop();
+				  			}
+				  		}	  
+				  		);
+						
+						tFiveB.start();
+						
+						
 
-				}
-				else
-				{
-					voiceRecogButton.setIcon(new ImageIcon("images/ErrorSpeech.png"));
-			  		Prompts.setText("Invalid passphrase. Please try again.");
-			  		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
-				
-			  		tFiveC = new Timer(5000, new ActionListener()
-			  		{
-			  			@Override
-			  			public void actionPerformed(ActionEvent arg0) 
-			  			{
-			  				fifthState(name_temp);
-			  				tFiveC.stop();
-			  			}
-			  		}	  
-			  		);
-			  		
-			  		tFiveC.start();
-			  		
-				}
-				  
-			    tFive.stop();
-			    
-			  }
-			}	  
-		);
-		tFive.start();
+					}
+					else
+					{
+						voiceRecogAttempts--;
+						
+						voiceRecogButton.setIcon(new ImageIcon("images/ErrorSpeech.png"));
+				  		Prompts.setText((voiceRecogAttempts != 0) ? "<html><center>Invalid passphrase. Please try again.<br /> (" + voiceRecogAttempts + " attempt(s) remaining)</center></html>" : "Invalid passphrase.");
+				  		progressBarButton.setIcon(new ImageIcon("images/HalfBar.png"));
+					
+				  		tFiveC = new Timer(5000, new ActionListener()
+				  		{
+				  			@Override
+				  			public void actionPerformed(ActionEvent arg0) 
+				  			{
+				  				fifthState(name_temp);
+				  				tFiveC.stop();
+				  			}
+				  		}	  
+				  		);
+				  		
+				  		tFiveC.start();
+				  		
+					}
+					  
+				    tFive.stop();
+				    
+				  }
+				}	  
+			);
+			tFive.start();
+		}
+		else
+		{
+			Prompts.setText("<html><center>All attempts used. Please wait 1 minute <br /> before trying again.</center></html>");
+	  		
+	  		activeIconButton.setIcon(new ImageIcon("images/PowerInactive.png"));
+	  		faceRecogButton.setIcon(new ImageIcon("images/HappyInactive.png"));
+	  		progressBarButton.setIcon(new ImageIcon("images/EmptyBar.png"));
+			voiceRecogButton.setIcon(new ImageIcon("images/PhraseInactive.png"));
+	  		doorLockButton.setIcon(new ImageIcon("images/Lock.png"));
+	  		
+	  		tFiveAllAttempts = new Timer(60000, new ActionListener()
+	  		{
+	  			@Override
+	  			public void actionPerformed(ActionEvent arg0) 
+	  			{
+	  				voiceRecogAttempts = 4;
+	  				tFiveAllAttempts.stop();
+	  				secondState();
+	  				
+	  			}
+	  		}	  
+	  		);
+	  		tFiveAllAttempts.start();
+		}
+		
+		
 		
 		
 		
