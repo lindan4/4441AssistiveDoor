@@ -111,10 +111,19 @@ public class DoorMain {
 		frame.setBounds(new Rectangle(0, 0, 0, 0));
 		frame.setBackground(new java.awt.Color(81, 68, 57));
 		frame.getContentPane().setBackground(new java.awt.Color(81, 68, 57));
-		frame.setBounds(0, 0, 1181, 1476); //Screen Resolution
+		frame.setBounds(0, 0, 480, 320); //Screen Resolution
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
-		frame.getContentPane().setBounds(0, 0, 1181, 1476); //Screen Resolution
+		frame.getContentPane().setBounds(0, 0, 480, 320); //Screen Resolution
+		
+		//Full-screen mode
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setUndecorated(true);
+		
+		
+		
+		
+		
 		
 		/**
 		 * Create the panel for the home page.
@@ -135,7 +144,7 @@ public class DoorMain {
 			progressBarButton = new JButton(next);
 			progressBarButton.setBorder(BorderFactory.createEmptyBorder());
 			progressBarButton.setContentAreaFilled(false);
-			progressBarButton.setBounds(140, 30, 900, 720);
+			progressBarButton.setBounds(0, 0, 480, 320);
 			home.add(progressBarButton);
 		
 			//Inactive Power Icon
@@ -143,7 +152,7 @@ public class DoorMain {
 			activeIconButton = new JButton(PowerInactive);
 			activeIconButton.setBorder(BorderFactory.createEmptyBorder());
 			activeIconButton.setContentAreaFilled(false);
-			activeIconButton.setBounds(140, 18, 900, 720);
+			activeIconButton.setBounds(0, 0, 480, 320);
 			home.add(activeIconButton);
 			
 			//Inactive Serious Icon (Facial recog)
@@ -151,7 +160,7 @@ public class DoorMain {
 			faceRecogButton = new JButton(SeriousInactive);
 			faceRecogButton.setBorder(BorderFactory.createEmptyBorder());
 			faceRecogButton.setContentAreaFilled(false);
-			faceRecogButton.setBounds(140, 18, 900, 720);
+			faceRecogButton.setBounds(0, 0, 480, 320);
 			home.add(faceRecogButton);
 			
 			//Inactive Serious Icon (Phrase icon)
@@ -159,7 +168,7 @@ public class DoorMain {
 			voiceRecogButton = new JButton(PhraseInactive);
 			voiceRecogButton.setBorder(BorderFactory.createEmptyBorder());
 			voiceRecogButton.setContentAreaFilled(false);
-			voiceRecogButton.setBounds(140, 18, 900, 720);
+			voiceRecogButton.setBounds(0, 0, 480, 320);
 			home.add(voiceRecogButton);
 			
 			//Lock Icon 
@@ -167,14 +176,14 @@ public class DoorMain {
 			doorLockButton = new JButton(Lock);
 			doorLockButton.setBorder(BorderFactory.createEmptyBorder());
 			doorLockButton.setContentAreaFilled(false);
-			doorLockButton.setBounds(140, 18, 900, 720);
+			doorLockButton.setBounds(0, 0, 480, 320);
 			home.add(doorLockButton);
 	
 			Prompts = new JLabel("", SwingConstants.CENTER);
 			Prompts.setHorizontalAlignment(SwingConstants.CENTER);
 			Prompts.setForeground(new Color(255, 255, 255));
-			Prompts.setFont(new Font("Arial", Font.PLAIN, 36));
-			Prompts.setBounds(136, 130, 900, 720);
+			Prompts.setFont(new Font("Arial", Font.PLAIN, 16));
+			Prompts.setBounds(0, 55, 480, 320);
 			
 			home.add(Prompts);
 			
@@ -187,9 +196,10 @@ public class DoorMain {
 			Background.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 			Background.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			Background.setBackground(new Color(0, 77, 102));
-			Background.setBounds(171, 147, 834, 563);
+			Background.setBounds(0, 0, 480, 320);
 			home.add(Background);
 		
+			/*
 			ImageIcon background = new ImageIcon("images/Background.png");
 			JLabel label1 = new JLabel();
 			label1.setBounds(140, -360, 1181, 1476);
@@ -199,8 +209,9 @@ public class DoorMain {
 			panel1.setBounds(0, 0, 0, 0);
 			panel1.setLayout(null);
 			home.add(label1);
+			*/
 			
-			
+			frame.pack();
 			
 			
 		// Transition from inactive state to active state
