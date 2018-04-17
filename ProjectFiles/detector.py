@@ -35,11 +35,11 @@ sentinel=False
 Id=0
 root = Tk()
 
-# timer
-lbl1 = Label()
-lbl1.pack(fill=BOTH, expand=1)
-root.geometry("250x100+800+100")
-lbl1.config(height=3, font=('times', 20, 'bold'))
+### timer
+##lbl1 = Label()
+##lbl1.pack(fill=BOTH, expand=1)
+##root.geometry("250x100+800+100")
+##lbl1.config(height=3, font=('times', 20, 'bold'))
 
 while time.time()<=t_end:
         cv2.namedWindow('image',cv2.WINDOW_NORMAL)
@@ -57,16 +57,17 @@ while time.time()<=t_end:
                 else:
                         name="Unknown"
                 #cv2.putText(img,str(name),(x,y+h),font,3.0,(0,255,0));
-        
+                
+        cv2.putText(img, "Done scanning in: " +str(int(t_end - time.time()))+" s",(40,10),font,1.0,(0,255,0));
         cv2.imshow("image",img);
         cv2.waitKey(1)
-        lbl1["text"] ="Done scanning in: "+ str(int(t_end - time.time()))
-        root.update()
+        #lbl1["text"] ="Done scanning in: "+ str(int(t_end - time.time()))
+        #root.update()
              #   break;
 cam.release()
 cv2.destroyAllWindows()
-root.destroy()
-root.mainloop()
+##root.destroy()
+##root.mainloop()
 
 if name=="Unknown":
         #print "You are unauthorized to enter!"
