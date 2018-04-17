@@ -488,7 +488,7 @@ public class DoorMain {
 						
 						//voiceRecogCountdown = 5;
 						
-						
+						Prompts.setText("Done recording passphrase.");
 						
 					}
 							
