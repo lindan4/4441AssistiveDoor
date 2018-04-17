@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 
 import java.awt.CardLayout;
 
@@ -20,6 +21,8 @@ import javax.swing.Timer;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.TimerTask;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Component;
@@ -73,7 +76,13 @@ public class DoorMain {
 	private int faceRecogAttempts = 4;
 	private int voiceRecogAttempts = 4;
 	
+	private int voiceRecogCountdown = 5;
+	private Timer voiceRecogTimer;
+	private TimerTask tT;
+	
 	//private Timer t = new Timer();
+	
+	private SwingWorker<Integer, Integer> swT;
  
 	/**
 	 * Launch the application.
@@ -401,10 +410,12 @@ public class DoorMain {
 	//the name is collected from Saads code so the voice can know which model it is trying to authenticate
 	private void fifthState(final String name_temp)
 	{
+		
+		
 		if (voiceRecogAttempts != 0)
 		{
 			voiceRecogButton.setIcon(new ImageIcon("images/SpeechDots.png"));
-			Prompts.setText("Please say pass phrase now.");
+			Prompts.setText("Please say your pass phrase (" + voiceRecogCountdown + " seconds remaining).");
 			final String name = name_temp;
 			 
 			tFive = new Timer(180, new ActionListener()
@@ -414,6 +425,9 @@ public class DoorMain {
 				  {
 				    //sixthState();
 					  Main voc = new Main();
+					  
+					
+
 						
 						// WATCH console for fixing bugs 
 						
@@ -424,7 +438,58 @@ public class DoorMain {
 							
 						// add some delay if you want
 						
+						
+						
+						/*
+						swT = new SwingWorker<Integer, Integer>()
+						{
+
+							@Override
+							protected Integer doInBackground() throws Exception 
+							{
+										// TODO Auto-generated method stub
+								
+								
+									voiceRecogTimer = new Timer(1000, new ActionListener()
+									{
+
+											@Override
+											public void actionPerformed(ActionEvent arg0) 
+											{
+												// TODO Auto-generated method stub
+												Prompts.setText("" + --voiceRecogCountdown);
+												
+												if (voiceRecogCountdown == 0)
+												{
+													voiceRecogTimer.stop();
+												}
+											}
+										
+									});
+									
+									voiceRecogTimer.setRepeats(true);
+									voiceRecogTimer.start();
+									
+								
+								
+								return null;
+							}							
+							
+						};
+						
+						swT.execute();
+						*/
+						
+						
+						
+						
+						
 						voc.recordTestCase();
+						
+						//voiceRecogCountdown = 5;
+						
+						
+						
 					}
 							
 					boolean HAS_VOICE_PASSED_TEST = false;
@@ -439,7 +504,7 @@ public class DoorMain {
 									//&& voc.validateUser(name, 50);
 							//System.out.println(HAS_VOICE_PASSED_TEST);
 					}
-					else
+					else 
 					{
 						voiceRecogButton.setIcon(new ImageIcon("images/ErrorSpeech.png"));
 				  		Prompts.setText("There was a system error. Restarting voice module.");
@@ -596,7 +661,6 @@ public class DoorMain {
 		Prompts.setText("Come on in!");
 		
 	}
-	
 	
 	
 	
