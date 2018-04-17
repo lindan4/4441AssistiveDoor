@@ -43,7 +43,8 @@ root = Tk()
 
 while time.time()<=t_end:
         cv2.namedWindow('image',cv2.WINDOW_NORMAL)
-        cv2.resizeWindow('image', 600,500)
+        cv2.moveWindow("image", -1,0);
+        cv2.resizeWindow('image', 480,320)
         ret,img=cam.read();
         gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY);
         faces=faceDetect.detectMultiScale(gray,1.3,5);
