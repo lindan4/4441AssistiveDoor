@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 
 import java.awt.CardLayout;
 
@@ -20,6 +21,8 @@ import javax.swing.Timer;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.TimerTask;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Component;
@@ -73,7 +76,13 @@ public class DoorMain {
 	private int faceRecogAttempts = 4;
 	private int voiceRecogAttempts = 4;
 	
+	private int voiceRecogCountdown = 5;
+	private Timer voiceRecogTimer;
+	private TimerTask tT;
+	
 	//private Timer t = new Timer();
+	
+	private SwingWorker<Integer, Integer> swT;
  
 	/**
 	 * Launch the application.
@@ -111,10 +120,19 @@ public class DoorMain {
 		frame.setBounds(new Rectangle(0, 0, 0, 0));
 		frame.setBackground(new java.awt.Color(81, 68, 57));
 		frame.getContentPane().setBackground(new java.awt.Color(81, 68, 57));
-		frame.setBounds(0, 0, 1181, 1476); //Screen Resolution
+		frame.setBounds(0, 0, 480, 320); //Screen Resolution
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
-		frame.getContentPane().setBounds(0, 0, 1181, 1476); //Screen Resolution
+		frame.getContentPane().setBounds(0, 0, 480, 320); //Screen Resolution
+		
+		//Full-screen mode
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setUndecorated(true);
+		
+		
+		
+		
+		
 		
 		/**
 		 * Create the panel for the home page.
@@ -135,7 +153,7 @@ public class DoorMain {
 			progressBarButton = new JButton(next);
 			progressBarButton.setBorder(BorderFactory.createEmptyBorder());
 			progressBarButton.setContentAreaFilled(false);
-			progressBarButton.setBounds(140, 30, 900, 720);
+			progressBarButton.setBounds(0, 0, 480, 320);
 			home.add(progressBarButton);
 		
 			//Inactive Power Icon
@@ -143,7 +161,7 @@ public class DoorMain {
 			activeIconButton = new JButton(PowerInactive);
 			activeIconButton.setBorder(BorderFactory.createEmptyBorder());
 			activeIconButton.setContentAreaFilled(false);
-			activeIconButton.setBounds(140, 18, 900, 720);
+			activeIconButton.setBounds(0, 0, 480, 320);
 			home.add(activeIconButton);
 			
 			//Inactive Serious Icon (Facial recog)
@@ -151,7 +169,7 @@ public class DoorMain {
 			faceRecogButton = new JButton(SeriousInactive);
 			faceRecogButton.setBorder(BorderFactory.createEmptyBorder());
 			faceRecogButton.setContentAreaFilled(false);
-			faceRecogButton.setBounds(140, 18, 900, 720);
+			faceRecogButton.setBounds(0, 0, 480, 320);
 			home.add(faceRecogButton);
 			
 			//Inactive Serious Icon (Phrase icon)
@@ -159,7 +177,7 @@ public class DoorMain {
 			voiceRecogButton = new JButton(PhraseInactive);
 			voiceRecogButton.setBorder(BorderFactory.createEmptyBorder());
 			voiceRecogButton.setContentAreaFilled(false);
-			voiceRecogButton.setBounds(140, 18, 900, 720);
+			voiceRecogButton.setBounds(0, 0, 480, 320);
 			home.add(voiceRecogButton);
 			
 			//Lock Icon 
@@ -167,14 +185,14 @@ public class DoorMain {
 			doorLockButton = new JButton(Lock);
 			doorLockButton.setBorder(BorderFactory.createEmptyBorder());
 			doorLockButton.setContentAreaFilled(false);
-			doorLockButton.setBounds(140, 18, 900, 720);
+			doorLockButton.setBounds(0, 0, 480, 320);
 			home.add(doorLockButton);
 	
 			Prompts = new JLabel("", SwingConstants.CENTER);
 			Prompts.setHorizontalAlignment(SwingConstants.CENTER);
 			Prompts.setForeground(new Color(255, 255, 255));
-			Prompts.setFont(new Font("Arial", Font.PLAIN, 36));
-			Prompts.setBounds(136, 130, 900, 720);
+			Prompts.setFont(new Font("Arial", Font.PLAIN, 16));
+			Prompts.setBounds(0, 55, 480, 320);
 			
 			home.add(Prompts);
 			
@@ -187,9 +205,10 @@ public class DoorMain {
 			Background.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 			Background.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			Background.setBackground(new Color(0, 77, 102));
-			Background.setBounds(171, 147, 834, 563);
+			Background.setBounds(0, 0, 480, 320);
 			home.add(Background);
 		
+			/*
 			ImageIcon background = new ImageIcon("images/Background.png");
 			JLabel label1 = new JLabel();
 			label1.setBounds(140, -360, 1181, 1476);
@@ -199,8 +218,9 @@ public class DoorMain {
 			panel1.setBounds(0, 0, 0, 0);
 			panel1.setLayout(null);
 			home.add(label1);
+			*/
 			
-			
+			frame.pack();
 			
 			
 		// Transition from inactive state to active state
@@ -390,10 +410,12 @@ public class DoorMain {
 	//the name is collected from Saads code so the voice can know which model it is trying to authenticate
 	private void fifthState(final String name_temp)
 	{
+		
+		
 		if (voiceRecogAttempts != 0)
 		{
 			voiceRecogButton.setIcon(new ImageIcon("images/SpeechDots.png"));
-			Prompts.setText("Please say pass phrase now.");
+			Prompts.setText("Please say your pass phrase (" + voiceRecogCountdown + " seconds remaining).");
 			final String name = name_temp;
 			 
 			tFive = new Timer(180, new ActionListener()
@@ -403,6 +425,9 @@ public class DoorMain {
 				  {
 				    //sixthState();
 					  Main voc = new Main();
+					  
+					
+
 						
 						// WATCH console for fixing bugs 
 						
@@ -413,7 +438,58 @@ public class DoorMain {
 							
 						// add some delay if you want
 						
+						
+						
+						/*
+						swT = new SwingWorker<Integer, Integer>()
+						{
+
+							@Override
+							protected Integer doInBackground() throws Exception 
+							{
+										// TODO Auto-generated method stub
+								
+								
+									voiceRecogTimer = new Timer(1000, new ActionListener()
+									{
+
+											@Override
+											public void actionPerformed(ActionEvent arg0) 
+											{
+												// TODO Auto-generated method stub
+												Prompts.setText("" + --voiceRecogCountdown);
+												
+												if (voiceRecogCountdown == 0)
+												{
+													voiceRecogTimer.stop();
+												}
+											}
+										
+									});
+									
+									voiceRecogTimer.setRepeats(true);
+									voiceRecogTimer.start();
+									
+								
+								
+								return null;
+							}							
+							
+						};
+						
+						swT.execute();
+						*/
+						
+						
+						
+						
+						
 						voc.recordTestCase();
+						
+						//voiceRecogCountdown = 5;
+						
+						Prompts.setText("Done recording passphrase.");
+						
 					}
 							
 					boolean HAS_VOICE_PASSED_TEST = false;
@@ -428,7 +504,7 @@ public class DoorMain {
 									//&& voc.validateUser(name, 50);
 							//System.out.println(HAS_VOICE_PASSED_TEST);
 					}
-					else
+					else 
 					{
 						voiceRecogButton.setIcon(new ImageIcon("images/ErrorSpeech.png"));
 				  		Prompts.setText("There was a system error. Restarting voice module.");
@@ -585,7 +661,6 @@ public class DoorMain {
 		Prompts.setText("Come on in!");
 		
 	}
-	
 	
 	
 	
