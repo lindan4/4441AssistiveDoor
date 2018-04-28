@@ -219,16 +219,18 @@ public class Main {
 	// record test case and return the current case
 	public String recordTestCase() {
 
-		JavaSoundRecorder jsr = new JavaSoundRecorder(TestRoot.getAbsolutePath());
+		JavaSoundRecorder jsr = new JavaSoundRecorder(TestRoot.getPath());
+		System.out.println(TestRoot.getPath());
 		jsr.run();
-		return getCurrentTestCaseFile();
+		return jsr.getfilePath();
 	}
 
 	// returns the latest test recording
 	private String getCurrentTestCaseFile() {
 		File[] test = TestRoot.listFiles();
-
-		return test[test.length - 1].getAbsolutePath();
+		
+		
+		return test[test.length - 1].getPath();
 
 	}
 
@@ -308,8 +310,8 @@ public class Main {
 		return true;
 	}
 
-	public boolean validatePassphrase(String name) {
-		String path = getCurrentTestCaseFile();
+	public boolean validatePassphrase(String name, String recentPath) {
+		String path = recentPath;
 		
 		String testMessage = null;
 		try {

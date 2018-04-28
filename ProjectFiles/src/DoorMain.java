@@ -70,6 +70,9 @@ public class DoorMain {
 	
 	private Timer tSeven;
 	
+	private Timer toExit;
+	
+	
 	private ArrayList<String> faceValidator;
 	private String faceName;
 	
@@ -418,6 +421,9 @@ public class DoorMain {
 			Prompts.setText("Please say your pass phrase (" + voiceRecogCountdown + " seconds remaining).");
 			final String name = name_temp;
 			 
+			
+			
+			
 			tFive = new Timer(180, new ActionListener()
 			{
 				  @Override
@@ -426,7 +432,7 @@ public class DoorMain {
 				    //sixthState();
 					  Main voc = new Main();
 					  
-					
+					  String recPath = "";
 
 						
 						// WATCH console for fixing bugs 
@@ -484,11 +490,11 @@ public class DoorMain {
 						
 						
 						
-						voc.recordTestCase();
+						recPath = voc.recordTestCase();
 						
 						//voiceRecogCountdown = 5;
 						
-						Prompts.setText("Done recording passphrase.");
+			//			Prompts.setText("Done recording passphrase.");
 						
 					}
 							
@@ -500,7 +506,7 @@ public class DoorMain {
 					{  //CASE 3
 							
 							// this does the validation  CASE 1 = true  CASE 2 = false
-							HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name);
+							HAS_VOICE_PASSED_TEST = voc.validatePassphrase(name, recPath);
 									//&& voc.validateUser(name, 50);
 							//System.out.println(HAS_VOICE_PASSED_TEST);
 					}
@@ -660,6 +666,20 @@ public class DoorMain {
 		progressBarButton.setIcon(new ImageIcon("images/FullBar.png"));
 		Prompts.setText("Come on in!");
 		
+		
+		toExit = new Timer(5000, new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				frame.dispose();
+				toExit.stop();
+			}
+			
+		});
+		
+		toExit.start();
 	}
 	
 	
