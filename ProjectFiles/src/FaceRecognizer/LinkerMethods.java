@@ -20,7 +20,7 @@ public final class LinkerMethods {
 	public static ArrayList<String> callDetector(){
 		ArrayList<String> returnVals= new ArrayList<String>();
 		try {
-			Process p =Runtime.getRuntime().exec("cmd /c detector.py"); //Need to install python in the directory of the program
+			Process p =Runtime.getRuntime().exec("python3 detector.py"); //Need to install python in the directory of the program
 			//Input stream from the executable
 			InputStream is = p.getInputStream();
 			

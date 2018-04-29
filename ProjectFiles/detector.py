@@ -2,7 +2,7 @@ import cv2
 import time 
 import numpy as np
 import sqlite3
-from Tkinter import *
+from tkinter import *
 
 def tableInsert(Id):
         name=0
@@ -24,9 +24,9 @@ def tableInsert(Id):
 
 
 faceDetect=cv2.CascadeClassifier('haarcascade_frontalface_default.xml');
-cam=cv2.VideoCapture(1);
+cam=cv2.VideoCapture(0);
 rec=cv2.face.LBPHFaceRecognizer_create();
-rec.read("recognizer\\traningData.yml")
+rec.read("recognizer/traningData.yml")
 font = cv2.FONT_HERSHEY_COMPLEX_SMALL
 t_end=time.time()+10
 name="Unknown"
@@ -79,4 +79,4 @@ if name=="Unknown":
 else:
         #print "We found a match as " +name+". You may proceed to the next phase"
         sentinel=True
-print str(sentinel)+ "," +name +"," +str(Id)
+print (str(sentinel)+ "," +name +"," +str(Id))

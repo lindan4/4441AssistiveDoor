@@ -1,4 +1,4 @@
-from Tkinter import *
+from tkinter import *
 import sqlite3
 import cv2
 import time
@@ -8,7 +8,7 @@ import trainer as t
 
 def tableInsert(serialID, name):
         conn=sqlite3.connect('FaceBase.db')
-        print "connected successfully"
+        print ("connected successfully")
         conn.execute("insert into People (SerialNumber, Name) values (?, ?)",
                      (serialID,name))
         conn.commit()
@@ -55,7 +55,7 @@ if len(name.get()) == 0:
     print ("Cant leave name field empty")
     serialID=0
 else:
-    cam=cv2.VideoCapture(1);
+    cam=cv2.VideoCapture(0);
 
     if os.path.isfile(path):
         #print("File exists")
@@ -69,7 +69,7 @@ else:
         serialID=serialID+1
         f.close();
 
-    print "Taking a picture for training purposes"
+    print ("Taking a picture for training purposes")
 
     while(True):
 
@@ -95,7 +95,6 @@ else:
     tableInsert(serialID, str(name.get()))
 t.trainingMechanism()
 if serialID==0:
-    print "false"
+    print ("false")
 else:
-    print "true"
-    
+    print ("true")

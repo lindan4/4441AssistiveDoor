@@ -28,7 +28,7 @@ public class SimpleExample {
 
 	public static String run(String filepath) {
 
-		String key = "836e1733dc95483b9e76b3dba905710d";
+		String key = "8ede9024e654481f932387639601bc39";
 		
 		try {
 			SpeechClientREST client = new SpeechClientREST(new Authentication(key));

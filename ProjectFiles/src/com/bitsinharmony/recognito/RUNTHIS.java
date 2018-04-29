@@ -60,6 +60,7 @@ public class RUNTHIS {
 
 			// file path to latest test
 			String path = voc.recordTestCase();
+			System.out.println(path);
 			// get what was said in the latest case
 			try {
 				testMessage = voc.speechToText(path);
@@ -120,6 +121,8 @@ public class RUNTHIS {
 			System.out.println("Who are you trying to validate?");
 
 			String name = scanner.nextLine();
+			
+			String path = "";
 
 			// line in weird null error work around
 			do {
@@ -131,11 +134,11 @@ public class RUNTHIS {
 			
 			
 			if (voc.checkModelSatus(name)) {
-				voc.recordTestCase();
+				path = voc.recordTestCase();
 			}
 			
 			if (voc.checkTestcase()) {
-			System.out.println(	"Passphrase = " + voc.validatePassphrase(name));
+			System.out.println(	"Passphrase = " + voc.validatePassphrase(name, path));
 			System.out.println( "50% confidence pass = " + voc.validateUser(name, 50));
 
 			}
