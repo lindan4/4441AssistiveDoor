@@ -35,14 +35,13 @@ def trainingMechanism():
         row=cur.fetchone();
         for r in row:
                 users=r
-                print(users)
+                #print(users)
 
         
         conn.close()
 
         if users<1:
-                print("Less than 1")
-                print("suck me"
+                #print("Less than 1")
                 os.remove(deleteTrainer)
                 
         else:
@@ -52,4 +51,3 @@ def trainingMechanism():
                 recognizer.save('recognizer/traningData.yml')
                 cv2.destroyAllWindows()
                 print("Done training")
-#trainingMechanism()

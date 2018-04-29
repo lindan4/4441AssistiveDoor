@@ -6,7 +6,7 @@ import time
 import fileDeleteMechanism as t
 import os
 
-name=0
+name="Unknown"
 Id=0
 userExists=True
 filePath='recognizer/traningData.yml'
@@ -67,8 +67,8 @@ if os.path.exists(filePath):
                         Id,conf=rec.predict(gray[y:y+h,x:x+w])
                         #
                         #print(conf);
-                        if(conf<48):    # Play around with these values because camera is shitty
-                          # print("confidence below 42")
+                        if(conf<36):    # Play around with these values because camera is shitty
+                           #print(conf)
                            name=tableInsert(Id)
                            switch=True
                         else:
@@ -84,7 +84,7 @@ if os.path.exists(filePath):
         if switch==True:
                 root=Tk()
                 root.title("Are you sure?")
-                root.geometry("450x150+500+400")
+                root.geometry("450x150+0+0")
                 unAuthorizedLabel= Label(root,text=str(name)+", This will destroy all your files and you won't be \nrecognized by the system. \nAre you sure?",
                                 font=("arial",12,"bold")).place(x=25,y=25)
 
@@ -97,7 +97,7 @@ if os.path.exists(filePath):
         else:
                 root=Tk()
                 root.title("Unauthorized access")
-                root.geometry("450x150+500+400")
+                root.geometry("450x150+0+0")
                 unAuthorizedLabel= Label(root,text="         You are unauthorized to make these changes!",
                          font=("arial",12,"bold")).place(x=10,y=30)
 
@@ -107,4 +107,4 @@ if os.path.exists(filePath):
 else:
         #print("suck a dick")
         userExists=False
-        print(str(userExists))
+print(str(name)+","+str(Id))
