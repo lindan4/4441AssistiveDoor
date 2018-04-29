@@ -1,4 +1,4 @@
-from tkinter import *
+from Tkinter import * #change to tkinter on Pi
 import sqlite3
 import cv2
 import time
@@ -47,15 +47,13 @@ root.mainloop();
 
 font = cv2.FONT_HERSHEY_COMPLEX_SMALL
 sampleNum=0;
-        #id=raw_input('Please enter your name: ')
-
         #Frontal face capture
 serialID=0
 if len(name.get()) == 0:
     print ("Cant leave name field empty")
     serialID=0
 else:
-    cam=cv2.VideoCapture(0);
+    cam=cv2.VideoCapture(1); #change on the Pi
 
     if os.path.isfile(path):
         #print("File exists")
@@ -69,20 +67,23 @@ else:
         serialID=serialID+1
         f.close();
 
-    print ("Taking a picture for training purposes")
+    #print ("Taking a picture for training purposes")
 
     while(True):
-
+        cv2.namedWindow('face',cv2.WINDOW_NORMAL)
+        cv2.setWindowProperty("face",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
         ret,img=cam.read();
         gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY);
         faces=faceDetect.detectMultiScale(gray,1.3,5);
+        cv2.putText(img, "Picture: " + str(sampleNum)+" of 101",(280,35),font,1.25,(0,255,0));
         for(x,y,w,h) in faces:
             sampleNum=sampleNum+1;
             cv2.imwrite("facesData/"+str(name.get())+"."+ str(serialID)+"." +str(sampleNum)+ ".jpg", gray[y:y+h, x:x+w])
             cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
-            cv2.putText(img,"Picture "+str(sampleNum)+" of 101",(x,y+h),font,1.0,(0,255,0));
+            #cv2.putText(img,"Picture "+str(sampleNum)+" of 101",(x,y+h),font,1.0,(0,255,0));
             cv2.waitKey(50);
         cv2.imshow("face",img);
+        
         cv2.waitKey(1)
         if(sampleNum>100):
             break
