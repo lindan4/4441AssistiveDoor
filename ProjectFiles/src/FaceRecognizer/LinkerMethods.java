@@ -20,7 +20,7 @@ public final class LinkerMethods {
 	public static ArrayList<String> callDetector(){
 		ArrayList<String> returnVals= new ArrayList<String>();
 		try {
-			Process p =Runtime.getRuntime().exec("python3 detector.py"); //Need to install python in the directory of the program
+			Process p =Runtime.getRuntime().exec("cmd /c detector.py"); //Need to install python in the directory of the program
 			//Input stream from the executable
 			InputStream is = p.getInputStream();
 			
@@ -31,7 +31,7 @@ public final class LinkerMethods {
 				sb.append((char)i);
 			}
 			
-			System.out.println(sb.toString());
+			//System.out.println(sb.toString());
 			
 			
 			Scanner scan= new Scanner(sb.toString());
@@ -63,12 +63,11 @@ public final class LinkerMethods {
 	 * @return true if enrolled successfully, false otherwise.
 	 */
 	
-	public static boolean callDataSetGeneration() {
-		Process p;
-		boolean retVal=false;
+	public static ArrayList<String> callDataSetGeneration() {
+		ArrayList<String> returnVals= new ArrayList<String>();
 		try {
-			p = Runtime.getRuntime().exec("C:\\\\Python27\\\\python.exe datasetCreator.py"); //need to fix this absolute path
-			
+			Process p =Runtime.getRuntime().exec("cmd /c datasetCreator.py"); //Need to install python in the directory of the program
+			//Input stream from the executable
 			InputStream is = p.getInputStream();
 			
 			//Read the input stream
@@ -81,20 +80,22 @@ public final class LinkerMethods {
 			//System.out.println(sb.toString());
 			
 			Scanner scan= new Scanner(sb.toString());
-			scan.nextLine();
-			scan.nextLine();
-			String oneLine = scan.nextLine();
+			//scan.nextLine();
+			String oneLine =scan.nextLine();
 			
 			//System.out.println(oneLine);
+			StringTokenizer tokenize = new StringTokenizer(oneLine,",");
 			
-			retVal = Boolean.parseBoolean(oneLine);
+			while (tokenize.hasMoreTokens()) {
+				returnVals.add(tokenize.nextToken());
+			}
+			scan.close();
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			retVal=false;
-		} //Need to install python in the directory of the program
-		return retVal;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return returnVals;
 	}
 	
 	/**
@@ -102,15 +103,15 @@ public final class LinkerMethods {
 	 * @return -1 if the person doesn't exist in the system, 1 if the delete was successful
 	 * 0 if the authorized user decides not to delete their information, and -2 if an exceotion is thrown.
 	 */
-	public static int callDataDelete(){
-		int i;
+	public static ArrayList<String> callDataDelete(){
+		ArrayList<String> returnVals= new ArrayList<String>();
 		try {
-			Process p =Runtime.getRuntime().exec("C:\\\\Python27\\\\python.exe dataDeleteMechanism.py"); //Need to install python in the directory of the program
+			Process p =Runtime.getRuntime().exec("cmd /c dataDeleteMechanism.py"); //Need to install python in the directory of the program
 			//Input stream from the executable
 			InputStream is = p.getInputStream();
 			
 			//Read the input stream
-			//int i=0;
+			int i=0;
 			StringBuffer sb = new StringBuffer();
 			while((i=is.read())!=-1) {
 				sb.append((char)i);
@@ -121,17 +122,20 @@ public final class LinkerMethods {
 			Scanner scan= new Scanner(sb.toString());
 			//scan.nextLine();
 			String oneLine =scan.nextLine();
-			i= Integer.parseInt(oneLine);
+			
 			//System.out.println(oneLine);
 			
+			StringTokenizer tokenize = new StringTokenizer(oneLine,",");
 			
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			i=-12;
+			while (tokenize.hasMoreTokens()) {
+				returnVals.add(tokenize.nextToken());
+			}
+			scan.close();
 		}
-		return i;
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return returnVals;
 	}
 	
 }

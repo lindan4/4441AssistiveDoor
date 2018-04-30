@@ -10,7 +10,7 @@ name="Unknown"
 Id=0
 userExists=True
 filePath='recognizer/traningData.yml'
-
+isChosen=False
 def tableInsert(Id):
         name=22
         conn=sqlite3.connect('FaceBase.db')
@@ -36,14 +36,18 @@ def okButton():
 
 def noButton():
         #print "0"
+        global isChosen
+        isChosen=False
         root.destroy()
 
 def yesButton():
+        global isChosen
+        isChosen=True
         t.DeleteImformation(name,Id)
         root.destroy()
         #print "1"
         
-
+isChosen=False
 if os.path.exists(filePath):
         faceDetect=cv2.CascadeClassifier('haarcascade_frontalface_default.xml');
         cam=cv2.VideoCapture(1); #change on Pi
@@ -74,6 +78,7 @@ if os.path.exists(filePath):
                         else:
                             name="Unknown"
                             switch=False
+                            Id=0
                         #cv2.putText(img,str(name),(x,y+h),font,3.0,(0,255,0));
                         
                 cv2.imshow("face",img);
@@ -107,4 +112,4 @@ if os.path.exists(filePath):
 else:
         #print("suck a dick")
         userExists=False
-print(str(name)+","+str(Id))
+print(str(isChosen)+","+str(name)+","+str(Id))
