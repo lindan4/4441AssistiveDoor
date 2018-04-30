@@ -56,7 +56,24 @@ public class Main {
 		}
 		return false;
 	}
-
+	
+	public void deleteModel(File folder) {
+		 File[] files = folder.listFiles();
+		    if(files!=null) { //some JVMs return null for empty dirs
+		        for(File f: files) {
+		            if(f.isDirectory()) {
+		                deleteModel(f);
+		            } else {
+		                f.delete();
+		                System.out.println("File hit");
+		            }
+		        }
+		    }
+		    folder.delete();
+		    
+	//	return false;
+	}
+	
 	// record model and return file path + file name
 	public String recordModel(String name) throws ParseException, IOException {
 		if (createModel(name)) {

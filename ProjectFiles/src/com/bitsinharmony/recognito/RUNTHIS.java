@@ -1,5 +1,6 @@
 package com.bitsinharmony.recognito;
 
+import java.io.File;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -20,6 +21,7 @@ public class RUNTHIS {
 		System.out.println("1 :Create a new voice model?");
 		System.out.println("2 :Test confidence of system");
 		System.out.println("3 :Test Fifth State");
+		System.out.println("4 :Delete Model");
 
 		int state = scanner.nextInt();
 		if (state == 1) {
@@ -39,9 +41,9 @@ public class RUNTHIS {
 				System.out.println("Cannot Create/Find account");
 			}
 
-			System.out.println("Enter Length of recording (in milliseconds) ! recording will start immediately after");
+			//System.out.println("Enter Length of recording (in milliseconds) ! recording will start immediately after");
 
-			long time = scanner.nextLong();
+			long time = 5000;
 			voc.setRecordingTime(time);
 			try {
 				voc.recordModel(name);
@@ -54,8 +56,8 @@ public class RUNTHIS {
 			String testMessage = null;
 			// user wants to check the database confidence level
 
-			System.out.println("Enter Length of recording (in milliseconds) ! recording will start immediately after");
-			long time = scanner.nextLong();
+			//System.out.println("Enter Length of recording (in milliseconds) ! recording will start immediately after");
+			long time = 5000;
 			voc.setRecordingTime(time);
 
 			// file path to latest test
@@ -71,7 +73,7 @@ public class RUNTHIS {
 
 			Map<String, String> usersPassPhrase = voc.getAllPassphrase();
 			// ArrayList<String> users = voc.getRegisteredUsers();
-			System.out.println("Who are you trying to validate?");
+			//System.out.println("Who are you trying to validate?");
 
 			String name = scanner.nextLine();
 
@@ -116,7 +118,7 @@ public class RUNTHIS {
 
 			}
 
-		} else {
+		} else if(state == 3) {
 
 			System.out.println("Who are you trying to validate?");
 
@@ -130,9 +132,6 @@ public class RUNTHIS {
 				name = scanner.nextLine();
 			} while (name == null);
 
-			
-			
-			
 			if (voc.checkModelSatus(name)) {
 				path = voc.recordTestCase();
 			}
@@ -142,9 +141,59 @@ public class RUNTHIS {
 			System.out.println( "50% confidence pass = " + voc.validateUser(name, 50));
 
 			}
-			
+		}
+			else if(state==4) {
+				String testMessage = null;
+				// user wants to check the database confidence level
+
+				//System.out.println("Enter Length of recording (in milliseconds) ! recording will start immediately after");
+				long time = 5000;
+				voc.setRecordingTime(time);
+				
+
+				// file path to latest test
+				String path = voc.recordTestCase();
+				System.out.println(path);
+				// get what was said in the latest case
+				try {
+					testMessage = voc.speechToText(path);
+					System.out.println(">>>>>>>>> You Said : " + testMessage);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
+				Map<String, String> usersPassPhrase = voc.getAllPassphrase();
+				// ArrayList<String> users = voc.getRegisteredUsers();
+				//System.out.println("Who are you trying to validate?");
+
+				String name = scanner.nextLine();
+
+				// weird null error work around
+				do {
+					System.out.println("Who are you trying to validate?");
+					name = scanner.nextLine();
+				} while (name == null);
+
+				// check to see if passphrase matches the user
+				if (!usersPassPhrase.containsKey(name)) {
+					System.out.println(">>>>>>>>>>>>> User Does Not exist");
+				} else {
+					System.out.println(">>>>>>>>>>>>> Users exists");
+					if (usersPassPhrase.get(name).equals(testMessage)) {
+						System.out.println(">>>>>>>>>>>>> PassPhrase Match");
+						
+						String path2="Models"+File.separator+name;
+						File f= new File(path2);
+						System.out.println(">>>>>>>>>>>>> "+f.getPath());
+						voc.deleteModel(f);
+
+					} else {
+						System.out.println(">>>>>>>>>>>>> PassPhrase Does not match");
+						
+					}
+			}
 
 		}
  scanner.close();
 	}
-}
+	}
