@@ -45,9 +45,10 @@ def trainingMechanism():
                 os.remove(deleteTrainer)
                 
         else:
-                print("greater than 1")
+                #print("greater than 1")
                 Ids,faces=getImagesWithID(path)
                 recognizer.train(faces,Ids)
                 recognizer.save('recognizer/traningData.yml')
                 cv2.destroyAllWindows()
-                print("Done training")
+                #print("Done training")
+#trainingMechanism()
