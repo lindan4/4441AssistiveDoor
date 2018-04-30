@@ -8,7 +8,7 @@ import trainer as t
 
 def tableInsert(serialID, name):
         conn=sqlite3.connect('FaceBase.db')
-        print ("connected successfully")
+#        print ("connected successfully")
         conn.execute("insert into People (SerialNumber, Name) values (?, ?)",
                      (serialID,name))
         conn.commit()
@@ -50,7 +50,20 @@ sampleNum=0;
         #Frontal face capture
 serialID=0
 if len(name.get()) == 0:
-    print ("Cant leave name field empty")
+    #print ("Cant leave name field empty")
+    root = Tk()
+    root.title("Attention")
+    root.geometry("450x150+500+400") #Works for the Surface Screen
+
+    infoPrompt=Label(root,text="Name cannot be empty",
+                 font=("arial",12,"bold")).place(x=10,y=30)
+
+
+    okButton= Button(root, text="Ok", width=25, height=2,
+                     command=destroyAll).place(x=140,y=100)
+
+    root.mainloop();
+
     serialID=0
 else:
     cam=cv2.VideoCapture(1); #change on the Pi
@@ -75,7 +88,7 @@ else:
         ret,img=cam.read();
         gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY);
         faces=faceDetect.detectMultiScale(gray,1.3,5);
-        cv2.putText(img, "Picture: " + str(sampleNum)+" of 101",(280,35),font,1.25,(0,255,0));
+        cv2.putText(img, "Picture: " + str(sampleNum)+" of 100",(280,35),font,1.25,(0,255,0));
         for(x,y,w,h) in faces:
             sampleNum=sampleNum+1;
             cv2.imwrite("facesData/"+str(name.get())+"."+ str(serialID)+"." +str(sampleNum)+ ".jpg", gray[y:y+h, x:x+w])
@@ -94,8 +107,9 @@ else:
     h.write(str(serialID))
     h.close()
     tableInsert(serialID, str(name.get()))
-t.trainingMechanism()
+    t.trainingMechanism()
+    
 if serialID==0:
-    print ("false")
+        print("Unknown,0")
 else:
-    print ("true")
+        print(str(name.get())+","+str(serialID))

@@ -31,17 +31,17 @@ def tableInsert(Id):
 
 
 def okButton():
-        print "-1"
+        #print "-1"
         root.destroy()
 
 def noButton():
-        print "0"
+        #print "0"
         root.destroy()
 
 def yesButton():
         t.DeleteImformation(name,Id)
         root.destroy()
-        print "1"
+        #print "1"
         
 
 if os.path.exists(filePath):
