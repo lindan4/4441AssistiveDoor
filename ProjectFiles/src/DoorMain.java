@@ -90,7 +90,7 @@ public class DoorMain {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) 
+	public static void nunMe() 
 	{
 		
 		EventQueue.invokeLater(new Runnable() {

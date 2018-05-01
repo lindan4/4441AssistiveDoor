@@ -77,6 +77,12 @@ public class MainEverything {
 		}
 		else if(choice==2) {
 			//System.out.println("Second branch");
+			File f= new File("recognizer" + File.separator+"traningData.yml");
+			if(f.exists()) {
+				DoorMain.nunMe();
+			}else {
+				System.out.println("\nThis feature is unavailable because no user is registered");
+			}
 		}
 		else if(choice==3) {
 			//System.out.println("Third branch");
@@ -92,7 +98,7 @@ public class MainEverything {
 							+ "The user was de-enrolled from the system successfully");
 				}
 				else {
-					System.out.println("No changes were made to the user files");
+					System.out.println("\nNo changes were made to the user files");
 				}
 			}
 			else {
