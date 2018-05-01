@@ -65,7 +65,7 @@ public class Main {
 		                deleteModel(f);
 		            } else {
 		                f.delete();
-		                System.out.println("File hit");
+		                //System.out.println("File hit");
 		            }
 		        }
 		    }

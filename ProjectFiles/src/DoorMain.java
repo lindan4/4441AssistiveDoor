@@ -310,7 +310,7 @@ public class DoorMain {
 					  		
 					  		faceRecogAttempts = 4;
 					  		
-					  		faceName = faceValidator.get(1);
+					  		faceName = faceValidator.get(1)+"."+faceValidator.get(2);
 					  		
 					  		tThreeA = new Timer(3000, new ActionListener()
 					  		{
@@ -664,7 +664,7 @@ public class DoorMain {
 	{
 		doorLockButton.setIcon(new ImageIcon("images/Unlock.png"));
 		progressBarButton.setIcon(new ImageIcon("images/FullBar.png"));
-		Prompts.setText("Come on in!");
+		Prompts.setText("Come on in, "+faceValidator.get(1)+"!");
 		
 		
 		toExit = new Timer(5000, new ActionListener()

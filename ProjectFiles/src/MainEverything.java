@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -79,6 +80,24 @@ public class MainEverything {
 		}
 		else if(choice==3) {
 			//System.out.println("Third branch");
+			File f= new File("recognizer" + File.separator+"traningData.yml");
+			if(f.exists()) {
+				id=LinkerMethods.callDataDelete();
+				String sentinel=id.get(0);
+				if(sentinel.equals("True")) {
+					System.out.println("\nFace Data for user "+id.get(1)+" deleted successfully.");
+					String username=id.get(1)+"."+id.get(2);
+					voc.deleteModel(new File("Models"+File.separator+username));
+					System.out.println("Voice files for "+id.get(1)+" deleted successfully.\n\n"
+							+ "The user was de-enrolled from the system successfully");
+				}
+				else {
+					System.out.println("No changes were made to the user files");
+				}
+			}
+			else {
+				System.out.println("This feature is unavailable because no users exist.");
+			}
 		}
 	
 	}
