@@ -1,4 +1,4 @@
-from Tkinter import * #change to tkinter on Pi
+from tkinter import * #change to tkinter on Pi
 import sqlite3
 import cv2
 import time
@@ -32,7 +32,7 @@ h=0
 #GUI
 root = Tk()
 root.title("Information required")
-root.geometry("450x150+500+400") #Works for the Surface Screen
+root.geometry("450x150+0+0") #Works for the Surface Screen
 
 infoPrompt=Label(root,text="Please enter your name:",
                  font=("arial",12,"bold")).place(x=10,y=30)
@@ -53,7 +53,7 @@ if len(name.get()) == 0:
     #print ("Cant leave name field empty")
     root = Tk()
     root.title("Attention")
-    root.geometry("450x150+500+400") #Works for the Surface Screen
+    root.geometry("450x150+0+0") #Works for the Surface Screen
 
     infoPrompt=Label(root,text="Name cannot be empty",
                  font=("arial",12,"bold")).place(x=10,y=30)
@@ -66,7 +66,7 @@ if len(name.get()) == 0:
 
     serialID=0
 else:
-    cam=cv2.VideoCapture(1); #change on the Pi
+    cam=cv2.VideoCapture(0); #change on the Pi
 
     if os.path.isfile(path):
         #print("File exists")
@@ -94,7 +94,7 @@ else:
             cv2.imwrite("facesData/"+str(name.get())+"."+ str(serialID)+"." +str(sampleNum)+ ".jpg", gray[y:y+h, x:x+w])
             cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
             #cv2.putText(img,"Picture "+str(sampleNum)+" of 101",(x,y+h),font,1.0,(0,255,0));
-            cv2.waitKey(50);
+            cv2.waitKey(10);
         cv2.imshow("face",img);
         
         cv2.waitKey(1)

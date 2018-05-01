@@ -33,50 +33,55 @@ public class MainEverything {
 			//Facial Recognition
 			//Gets the id for the username.
 			id=LinkerMethods.callDataSetGeneration();
-			String username=id.get(0)+"."+id.get(1);
-			
-			System.out.println("\nFacial recognition is all set up!\n");
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			//voice recognition
-			voc.createModel(username);
-			System.out.println("Now working on the Voice Recognition\n");
-			System.out.println("This process will repeat 3 times. Say the same passphrase\nEach recording session lasts 5 seconds\n");
-			try {
-				Thread.sleep(6000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			voc.setRecordingTime(5000);
-			for(int i=0;i<3;i++) {
+			if(!id.get(0).equals("Unknown")){
+				String username=id.get(0)+"."+id.get(1);
+				
+				System.out.println("\nFacial recognition is all set up!\n");
 				try {
-					System.out.println("\n"+(i+1)+" of 3");
-					voc.recordModel(username);
-				} catch (Exception e) {
-					System.out.println("\nSorry couldn't hear you. Try Again");
-					i=i-1;
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//voice recognition
+				voc.createModel(username);
+				System.out.println("Now working on the Voice Recognition\n");
+				System.out.println("This process will repeat 3 times. Say the same passphrase\nEach recording session lasts 5 seconds\n");
+				try {
+					Thread.sleep(6000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				voc.setRecordingTime(5000);
+				for(int i=0;i<3;i++) {
 					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						System.out.println("\n"+(i+1)+" of 3");
+						voc.recordModel(username);
+					} catch (Exception e) {
+						System.out.println("\nSorry couldn't hear you. Try Again");
+						i=i-1;
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 				}
+				System.out.println("Voice recognition was successful.\n\n");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("\nRegistration was successful, "+id.get(0));
 			}
-			System.out.println("Voice recognition was successful.\n\n");
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			else{
+				System.out.println("\nNo changes were made to the system");
 			}
-			System.out.println("\nRegistration was successful, "+id.get(0));
 		}
 		else if(choice==2) {
 			//System.out.println("Second branch");
@@ -105,7 +110,7 @@ public class MainEverything {
 				}
 			}
 			else {
-				System.out.println("This feature is unavailable because no users exist.");
+				System.out.println("\nThis feature is unavailable because no users exist.");
 			}
 		}
 	

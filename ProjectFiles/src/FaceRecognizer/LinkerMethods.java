@@ -20,7 +20,7 @@ public final class LinkerMethods {
 	public static ArrayList<String> callDetector(){
 		ArrayList<String> returnVals= new ArrayList<String>();
 		try {
-			Process p =Runtime.getRuntime().exec("cmd /c detector.py"); //Need to install python in the directory of the program
+			Process p =Runtime.getRuntime().exec("python3 detector.py"); //Need to install python in the directory of the program
 			//Input stream from the executable
 			InputStream is = p.getInputStream();
 			
@@ -66,7 +66,7 @@ public final class LinkerMethods {
 	public static ArrayList<String> callDataSetGeneration() {
 		ArrayList<String> returnVals= new ArrayList<String>();
 		try {
-			Process p =Runtime.getRuntime().exec("cmd /c datasetCreator.py"); //Need to install python in the directory of the program
+			Process p =Runtime.getRuntime().exec("python3 datasetCreator.py"); //Need to install python in the directory of the program
 			//Input stream from the executable
 			InputStream is = p.getInputStream();
 			
@@ -106,7 +106,7 @@ public final class LinkerMethods {
 	public static ArrayList<String> callDataDelete(){
 		ArrayList<String> returnVals= new ArrayList<String>();
 		try {
-			Process p =Runtime.getRuntime().exec("cmd /c dataDeleteMechanism.py"); //Need to install python in the directory of the program
+			Process p =Runtime.getRuntime().exec("python3 dataDeleteMechanism.py"); //Need to install python in the directory of the program
 			//Input stream from the executable
 			InputStream is = p.getInputStream();
 			

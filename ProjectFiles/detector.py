@@ -2,7 +2,7 @@ import cv2
 import time 
 import numpy as np
 import sqlite3
-from Tkinter import * #change to Tkinter on PI
+from tkinter import * #change to Tkinter on PI
 import os
 
 def tableInsert(Id):
@@ -31,7 +31,7 @@ Id=0
 
 if os.path.exists("recognizer/traningData.yml"):
         faceDetect=cv2.CascadeClassifier('haarcascade_frontalface_default.xml');
-        cam=cv2.VideoCapture(1); # change when on the Pi
+        cam=cv2.VideoCapture(0); # change when on the Pi
         rec=cv2.face.LBPHFaceRecognizer_create();
 
         rec.read("recognizer/traningData.yml")
@@ -48,7 +48,7 @@ if os.path.exists("recognizer/traningData.yml"):
                         cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
                         Id,conf=rec.predict(gray[y:y+h,x:x+w])
                         #print(conf);
-                        if(conf<36):    # Play around with these values because camera is shitty
+                        if(conf<45):    # Play around with these values because camera is shitty
                         #print("confidence below 42")
                                 name=tableInsert(Id)
                         else:

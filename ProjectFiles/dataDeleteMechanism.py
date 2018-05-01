@@ -1,4 +1,4 @@
-from Tkinter import * #change to tkinter on pi
+from tkinter import * #change to tkinter on pi
 import cv2
 import numpy as np
 import sqlite3
@@ -50,7 +50,7 @@ def yesButton():
 isChosen=False
 if os.path.exists(filePath):
         faceDetect=cv2.CascadeClassifier('haarcascade_frontalface_default.xml');
-        cam=cv2.VideoCapture(1); #change on Pi
+        cam=cv2.VideoCapture(0); #change on Pi
         rec=cv2.face.LBPHFaceRecognizer_create();
         rec.read("recognizer/traningData.yml")
         i=0
@@ -71,7 +71,7 @@ if os.path.exists(filePath):
                         Id,conf=rec.predict(gray[y:y+h,x:x+w])
                         #
                         #print(conf);
-                        if(conf<36):    # Play around with these values because camera is shitty
+                        if(conf<45):    # Play around with these values because camera is shitty
                            #print(conf)
                            name=tableInsert(Id)
                            switch=True
@@ -110,6 +110,5 @@ if os.path.exists(filePath):
                              command=okButton).place(x=140,y=100)
                 root.mainloop();
 else:
-        #print("suck a dick")
         userExists=False
 print(str(isChosen)+","+str(name)+","+str(Id))
