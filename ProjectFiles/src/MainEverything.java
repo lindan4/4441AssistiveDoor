@@ -58,12 +58,15 @@ public class MainEverything {
 				try {
 					System.out.println("\n"+(i+1)+" of 3");
 					voc.recordModel(username);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					System.out.println("\nSorry couldn't hear you. Try Again");
+					i=i-1;
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 			System.out.println("Voice recognition was successful.\n\n");
